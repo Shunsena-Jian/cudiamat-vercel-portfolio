@@ -433,15 +433,15 @@ export default function App() {
                                 </form>
 
                                 <div className="border-t border-gray-800 pt-6 flex justify-center gap-8">
-                                    <a href="#" className="flex items-center gap-2 text-gray-500 hover:text-white transition-colors">
+                                    <a href="https://github.com/Shunsena-Jian" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-500 hover:text-white transition-colors">
                                         <Github size={20} />
                                         <span>github</span>
                                     </a>
-                                    <a href="#" className="flex items-center gap-2 text-gray-500 hover:text-blue-400 transition-colors">
+                                    <a href="https://www.linkedin.com/in/jian-raphael-cudiamat-70b1a5269/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-500 hover:text-blue-400 transition-colors">
                                         <Linkedin size={20} />
                                         <span>linkedin</span>
                                     </a>
-                                    <a href="#" className="flex items-center gap-2 text-gray-500 hover:text-green-400 transition-colors">
+                                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jian.r.cudiamat@gmail.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-500 hover:text-green-400 transition-colors">
                                         <Mail size={20} />
                                         <span>email</span>
                                     </a>
