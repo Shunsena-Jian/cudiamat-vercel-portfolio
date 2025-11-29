@@ -197,9 +197,9 @@ export default function App() {
                                     I advocate for open-source tools, linux-based workflows, and automated CI/CD pipelines.
                                 </p>
                                 <div className="flex flex-wrap gap-2 text-xs text-gray-500 font-mono">
-                                    <span className="bg-gray-900 px-2 py-1 rounded border border-gray-800">os: arch_linux</span>
+                                    <span className="bg-gray-900 px-2 py-1 rounded border border-gray-800">os: mac_os</span>
                                     <span className="bg-gray-900 px-2 py-1 rounded border border-gray-800">shell: zsh</span>
-                                    <span className="bg-gray-900 px-2 py-1 rounded border border-gray-800">editor: neovim</span>
+                                    <span className="bg-gray-900 px-2 py-1 rounded border border-gray-800">editor: jetbrains</span>
                                 </div>
                             </div>
                             <TerminalWindow title="neofetch" className="min-h-[300px] flex items-center justify-center">
