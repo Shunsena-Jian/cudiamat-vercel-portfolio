@@ -1,73 +1,66 @@
-# React + TypeScript + Vite
+# Jian Cudiamat - Portfolio Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, terminal-themed personal portfolio website built with **React**, **TypeScript**, and **Vite**. This project showcases my skills, experience, and projects in a unique, developer-centric interface featuring command-line aesthetics and smooth animations.
 
-Currently, two official plugins are available:
+## 🚀 Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Framework:** [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- **Build Tool:** [Vite](https://vitejs.dev/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Animations:** [Framer Motion](https://www.framer.com/motion/)
+- **Icons:** [Lucide React](https://lucide.dev/)
+- **Email Service:** [EmailJS](https://www.emailjs.com/)
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Terminal UI Theme:** A custom "hacker" aesthetic with window-like components and typewriter effects.
+- **Interactive Sections:**
+  - **Projects:** Showcase of works like the *Cadet Information System* and *IntelliDocs*, featuring tech stacks and performance metrics.
+  - **Experience:** Professional history displayed as system logs.
+  - **Skills:** Categorized technical proficiencies with visual indicators.
+- **Contact Form:** Fully functional contact form integrated with EmailJS.
+- **Responsive Design:** Optimized for various screen sizes.
 
-## Expanding the ESLint configuration
+## 🛠️ Installation & Setup
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Shunsena-Jian/cudiamat_main_portfolio.git
+   cd cudiamat_main_portfolio
+   ```
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+3. **Set up Environment Variables**
+   Create a `.env` file in the root directory and add your EmailJS credentials:
+   ```env
+   VITE_EMAILJS_SERVICE_ID=your_service_id
+   VITE_EMAILJS_TEMPLATE_ID=your_template_id
+   VITE_EMAILJS_PUBLIC_KEY=your_public_key
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+## 📂 Project Structure
+
+```
+src/
+├── components/       # Reusable UI components (TerminalWindow, TypewriterText, etc.)
+├── data/            # Static data for Projects, Experience, and Skills
+├── sections/        # Main page sections (Home, Projects, Experience, Contact)
+├── types.ts         # TypeScript definitions
+├── App.tsx          # Main application entry
+└── index.css        # Global styles and Tailwind directives
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📬 Contact
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **GitHub:** [Shunsena-Jian](https://github.com/Shunsena-Jian)
+- **LinkedIn:** [Jian Raphael Cudiamat](https://www.linkedin.com/in/jian-raphael-cudiamat-70b1a5269/)
+- **Email:** [jian.r.cudiamat@gmail.com](mailto:jian.r.cudiamat@gmail.com)
