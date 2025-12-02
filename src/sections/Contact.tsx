@@ -35,7 +35,7 @@ export const Contact: React.FC = () => {
     };
 
     return (
-        <div className="max-w-2xl mx-auto animate-in fad    e-in slide-in-from-bottom-4 duration-500">
+        <div className="max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
             <TerminalWindow title="send_message.sh">
                 <div className="space-y-6">
                     <div className="text-gray-500 dark:text-gray-400 text-sm">
