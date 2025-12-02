@@ -38,41 +38,41 @@ export const Contact: React.FC = () => {
         <div className="max-w-2xl mx-auto animate-in fad    e-in slide-in-from-bottom-4 duration-500">
             <TerminalWindow title="send_message.sh">
                 <div className="space-y-6">
-                    <div className="text-gray-400 text-sm">
+                    <div className="text-gray-500 dark:text-gray-400 text-sm">
                         <p>initiating secure channel...</p>
                         <p>handshake established.</p>
                     </div>
 
                     <form ref={form} className="space-y-4" onSubmit={sendEmail}>
                         <div className="space-y-1">
-                            <label className="text-xs text-green-500 uppercase">Input: Name</label>
+                            <label className="text-xs text-green-600 dark:text-green-500 uppercase">Input: Email</label>
                             <input 
                                 type="text" 
-                                name="user_name" 
+                                name="user_name"
                                 required
-                                className="w-full bg-black border border-gray-700 p-2 text-gray-300 focus:border-green-500 focus:outline-none rounded-sm" 
+                                className="w-full bg-gray-50 dark:bg-black border border-gray-300 dark:border-gray-700 p-2 text-gray-900 dark:text-gray-300 focus:border-green-500 focus:outline-none rounded-sm transition-colors"
                                 placeholder="Ident.User" 
                             />
                         </div>
 
                         <div className="space-y-1">
-                            <label className="text-xs text-green-500 uppercase">Input: Email</label>
+                            <label className="text-xs text-green-600 dark:text-green-500 uppercase">Input: Email</label>
                             <input 
                                 type="email" 
                                 name="user_email"
                                 required
-                                className="w-full bg-black border border-gray-700 p-2 text-gray-300 focus:border-green-500 focus:outline-none rounded-sm" 
+                                className="w-full bg-gray-50 dark:bg-black border border-gray-300 dark:border-gray-700 p-2 text-gray-900 dark:text-gray-300 focus:border-green-500 focus:outline-none rounded-sm transition-colors"
                                 placeholder="user@domain.com" 
                             />
                         </div>
 
                         <div className="space-y-1">
-                            <label className="text-xs text-green-500 uppercase">Input: Message</label>
+                            <label className="text-xs text-green-600 dark:text-green-500 uppercase">Input: Message</label>
                             <textarea 
                                 name="message" 
                                 required
                                 rows={5} 
-                                className="w-full bg-black border border-gray-700 p-2 text-gray-300 focus:border-green-500 focus:outline-none rounded-sm" 
+                                className="w-full bg-gray-50 dark:bg-black border border-gray-300 dark:border-gray-700 p-2 text-gray-900 dark:text-gray-300 focus:border-green-500 focus:outline-none rounded-sm transition-colors"
                                 placeholder="Payload content..." 
                             />
                         </div>
@@ -110,16 +110,16 @@ export const Contact: React.FC = () => {
                         </button>
                     </form>
 
-                    <div className="border-t border-gray-800 pt-6 flex justify-center gap-8">
-                        <a href="https://github.com/Shunsena-Jian" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-500 hover:text-white transition-colors">
+                    <div className="border-t border-gray-200 dark:border-gray-800 pt-6 flex justify-center gap-8">
+                        <a href="https://github.com/Shunsena-Jian" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-500 hover:text-black dark:hover:text-white transition-colors">
                             <Github size={20} />
                             <span>github</span>
                         </a>
-                        <a href="https://www.linkedin.com/in/jian-raphael-cudiamat-70b1a5269/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-500 hover:text-blue-400 transition-colors">
+                        <a href="https://www.linkedin.com/in/jian-raphael-cudiamat-70b1a5269/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                             <Linkedin size={20} />
                             <span>linkedin</span>
                         </a>
-                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jian.r.cudiamat@gmail.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-500 hover:text-green-400 transition-colors">
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jian.r.cudiamat@gmail.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-500 hover:text-green-600 dark:hover:text-green-400 transition-colors">
                             <Mail size={20} />
                             <span>email</span>
                         </a>
