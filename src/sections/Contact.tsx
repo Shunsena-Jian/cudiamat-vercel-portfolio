@@ -1,21 +1,17 @@
 import React, { useRef, useState } from 'react';
-import { Zap, Github, Linkedin, Mail, Loader2, CheckCircle, XCircle } from 'lucide-react';
-import { TerminalWindow } from '@/components/TerminalWindow';
+import { Send, Github, Linkedin, Mail, Loader2, CheckCircle, XCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
 export const Contact: React.FC = () => {
     const form = useRef<HTMLFormElement>(null);
     const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
-    const  sendEmail = (e: React.FormEvent) => {
+    const sendEmail = (e: React.FormEvent) => {
         e.preventDefault();
         if (!form.current) return;
 
         setStatus('sending');
 
-        // 1. Create a Service (e.g., Gmail) -> Get Service ID
-        // 2. Create an Email Template -> Get Template ID
-        // 3. Go to Account > Public Key -> Get Public Key
         emailjs.sendForm(
             import.meta.env.VITE_EMAILJS_SERVICE_ID,
             import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
@@ -23,109 +19,112 @@ export const Contact: React.FC = () => {
             import.meta.env.VITE_EMAILJS_PUBLIC_KEY
         )
             .then((result) => {
-            console.log(result.text);
-            setStatus('success');
-            form.current?.reset();
-            setTimeout(() => setStatus('idle'), 3000);
-        }, (error) => {
-            console.log(error.text);
-            setStatus('error');
-            setTimeout(() => setStatus('idle'), 3000);
-        });
+                console.log(result.text);
+                setStatus('success');
+                form.current?.reset();
+                setTimeout(() => setStatus('idle'), 3000);
+            }, (error) => {
+                console.log(error.text);
+                setStatus('error');
+                setTimeout(() => setStatus('idle'), 3000);
+            });
     };
 
     return (
-        <div className="max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <TerminalWindow title="send_message.sh">
-                <div className="space-y-6">
-                    <div className="text-gray-500 dark:text-gray-400 text-sm">
-                        <p>initiating secure channel...</p>
-                        <p>handshake established.</p>
-                    </div>
+        <div className="max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700 pb-24">
+            <header className="mb-12 text-center">
+                <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-500 dark:from-white dark:to-gray-400 mb-4 inline-block">
+                    Get in Touch
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400 text-lg">
+                    Have a project in mind or just want to say hi? I'd love to hear from you.
+                </p>
+            </header>
 
-                    <form ref={form} className="space-y-4" onSubmit={sendEmail}>
-                        <div className="space-y-1">
-                            <label className="text-xs text-green-600 dark:text-green-500 uppercase">Input: Email</label>
-                            <input 
-                                type="text" 
+            <div className="glass dark:glass-dark rounded-3xl p-8 border border-white/20 relative shadow-2xl">
+                <form ref={form} className="space-y-6" onSubmit={sendEmail}>
+                    <div className="grid md:grid-cols-2 gap-6">
+                        <div className="space-y-2">
+                            <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Name</label>
+                            <input
+                                type="text"
                                 name="user_name"
                                 required
-                                className="w-full bg-gray-50 dark:bg-black border border-gray-300 dark:border-gray-700 p-2 text-gray-900 dark:text-gray-300 focus:border-green-500 focus:outline-none rounded-sm transition-colors"
-                                placeholder="Ident.User" 
+                                className="w-full bg-white/50 dark:bg-black/20 border-0 ring-1 ring-gray-200 dark:ring-white/10 p-3 rounded-xl text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
+                                placeholder="John Doe"
                             />
                         </div>
 
-                        <div className="space-y-1">
-                            <label className="text-xs text-green-600 dark:text-green-500 uppercase">Input: Email</label>
-                            <input 
-                                type="email" 
+                        <div className="space-y-2">
+                            <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Email</label>
+                            <input
+                                type="email"
                                 name="user_email"
                                 required
-                                className="w-full bg-gray-50 dark:bg-black border border-gray-300 dark:border-gray-700 p-2 text-gray-900 dark:text-gray-300 focus:border-green-500 focus:outline-none rounded-sm transition-colors"
-                                placeholder="user@domain.com" 
+                                className="w-full bg-white/50 dark:bg-black/20 border-0 ring-1 ring-gray-200 dark:ring-white/10 p-3 rounded-xl text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
+                                placeholder="john@example.com"
                             />
                         </div>
-
-                        <div className="space-y-1">
-                            <label className="text-xs text-green-600 dark:text-green-500 uppercase">Input: Message</label>
-                            <textarea 
-                                name="message" 
-                                required
-                                rows={5} 
-                                className="w-full bg-gray-50 dark:bg-black border border-gray-300 dark:border-gray-700 p-2 text-gray-900 dark:text-gray-300 focus:border-green-500 focus:outline-none rounded-sm transition-colors"
-                                placeholder="Payload content..." 
-                            />
-                        </div>
-
-                        <button 
-                            type="submit"
-                            disabled={status === 'sending' || status === 'success'}
-                            className={`w-full font-bold py-2 px-4 rounded-sm flex items-center justify-center gap-2 transition-all ${
-                                status === 'success' ? 'bg-green-900 text-green-200 cursor-default' :
-                                status === 'error' ? 'bg-red-900 text-red-200' :
-                                'bg-green-700 hover:bg-green-600 text-white'
-                            }`}
-                        >
-                            {status === 'sending' ? (
-                                <>
-                                    <Loader2 size={16} className="animate-spin" />
-                                    TRANSMITTING...
-                                </>
-                            ) : status === 'success' ? (
-                                <>
-                                    <CheckCircle size={16} />
-                                    TRANSMISSION_COMPLETE
-                                </>
-                            ) : status === 'error' ? (
-                                <>
-                                    <XCircle size={16} />
-                                    ERROR_RETRY
-                                </>
-                            ) : (
-                                <>
-                                    <Zap size={16} />
-                                    EXECUTE_SEND()
-                                </>
-                            )}
-                        </button>
-                    </form>
-
-                    <div className="border-t border-gray-200 dark:border-gray-800 pt-6 flex justify-center gap-8">
-                        <a href="https://github.com/Shunsena-Jian" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-500 hover:text-black dark:hover:text-white transition-colors">
-                            <Github size={20} />
-                            <span>github</span>
-                        </a>
-                        <a href="https://www.linkedin.com/in/jian-raphael-cudiamat-70b1a5269/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                            <Linkedin size={20} />
-                            <span>linkedin</span>
-                        </a>
-                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jian.r.cudiamat@gmail.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-500 hover:text-green-600 dark:hover:text-green-400 transition-colors">
-                            <Mail size={20} />
-                            <span>email</span>
-                        </a>
                     </div>
-                </div>
-            </TerminalWindow>
+
+                    <div className="space-y-2">
+                        <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Message</label>
+                        <textarea
+                            name="message"
+                            required
+                            rows={5}
+                            className="w-full bg-white/50 dark:bg-black/20 border-0 ring-1 ring-gray-200 dark:ring-white/10 p-3 rounded-xl text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all resize-none"
+                            placeholder="Tell me about your project..."
+                        />
+                    </div>
+
+                    <button
+                        type="submit"
+                        disabled={status === 'sending' || status === 'success'}
+                        className={`w-full font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] active:scale-[0.98] ${status === 'success' ? 'bg-green-600 text-white cursor-default' :
+                                status === 'error' ? 'bg-red-600 text-white' :
+                                    'bg-gray-900 dark:bg-white text-white dark:text-black hover:shadow-lg'
+                            }`}
+                    >
+                        {status === 'sending' ? (
+                            <>
+                                <Loader2 size={20} className="animate-spin" />
+                                Sending...
+                            </>
+                        ) : status === 'success' ? (
+                            <>
+                                <CheckCircle size={20} />
+                                Message Sent!
+                            </>
+                        ) : status === 'error' ? (
+                            <>
+                                <XCircle size={20} />
+                                Failed to Send
+                            </>
+                        ) : (
+                            <>
+                                <Send size={20} />
+                                Send Message
+                            </>
+                        )}
+                    </button>
+                </form>
+            </div>
+
+            <div className="mt-12 flex justify-center gap-8">
+                <a href="https://github.com/Shunsena-Jian" target="_blank" rel="noopener noreferrer" className="p-4 rounded-full glass dark:glass-dark text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white hover:scale-110 transition-all duration-300">
+                    <Github size={24} />
+                    <span className="sr-only">GitHub</span>
+                </a>
+                <a href="https://www.linkedin.com/in/jian-raphael-cudiamat-70b1a5269/" target="_blank" rel="noopener noreferrer" className="p-4 rounded-full glass dark:glass-dark text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:scale-110 transition-all duration-300">
+                    <Linkedin size={24} />
+                    <span className="sr-only">LinkedIn</span>
+                </a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jian.r.cudiamat@gmail.com" target="_blank" rel="noopener noreferrer" className="p-4 rounded-full glass dark:glass-dark text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400 hover:scale-110 transition-all duration-300">
+                    <Mail size={24} />
+                    <span className="sr-only">Email</span>
+                </a>
+            </div>
         </div>
     );
 };

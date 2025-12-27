@@ -1,62 +1,163 @@
 import React from 'react';
-import { Folder } from 'lucide-react';
-import { TerminalWindow } from '@/components/TerminalWindow';
+import { Folder, ExternalLink, ArrowUpRight } from 'lucide-react';
 import { PROJECTS } from '../data/content';
+import { motion } from 'framer-motion';
 
-export const Projects: React.FC = () => {
+interface ProjectsProps {
+    onNavigate: (section: string) => void;
+}
+
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1
+        }
+    }
+};
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+};
+
+export const Projects: React.FC<ProjectsProps> = ({ onNavigate }) => {
+    // Filter projects for Featured vs Others
+    // IDs p3 and p4 correspond to "kasalo_kusina_frontend" and "kasalo_kusina_backend"
+    const featuredProjects = PROJECTS.filter(p => p.id === 'p3' || p.id === 'p4');
+    const otherProjects = PROJECTS.filter(p => p.id !== 'p3' && p.id !== 'p4');
+
     return (
-        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <header className="mb-8">
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-                    <Folder className="text-blue-500" />
-                    /projects
+        <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="space-y-12 pb-24"
+        >
+            <motion.header variants={itemVariants} className="mb-12">
+                <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-500 dark:from-white dark:to-gray-400 mb-4 inline-block">
+                    Projects
                 </h2>
-                <p className="text-gray-600 dark:text-gray-500 text-sm">Listing directories... found {PROJECTS.length} results.</p>
-            </header>
+                <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl">
+                    A collection of work demonstrating robust architecture and sleek user interfaces.
+                </p>
+            </motion.header>
 
-            <div className="grid md:grid-cols-2 gap-6">
-                {PROJECTS.map((project) => (
-                    <TerminalWindow key={project.id} title={`cat ${project.name}.json`}>
-                        <div className="space-y-4">
-                            <div className="flex justify-between items-start">
-                                <h3 className="text-xl font-bold text-green-600 dark:text-green-400">{project.name}</h3>
-                                <span className={`text-xs px-2 py-1 rounded border ${
-                                    project.status === 'Deployed'
-                                        ? 'border-green-200 bg-green-100 text-green-700 dark:border-green-800 dark:bg-green-900/20 dark:text-green-400'
-                                        : project.status === 'In Development'
-                                            ? 'border-yellow-200 bg-yellow-100 text-yellow-700 dark:border-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400'
-                                            : 'border-gray-200 bg-gray-100 text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-500'
-                                }`}>
-                         {project.status.toUpperCase()}
-                       </span>
+            {/* Featured Projects Section */}
+            {featuredProjects.length > 0 && (
+                <motion.div variants={itemVariants} className="mb-16">
+                    <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-8 flex items-center gap-2">
+                        <span className="w-1 h-8 bg-blue-500 rounded-full"></span>
+                        Featured Project
+                    </h3>
+                    <div className="grid md:grid-cols-1 gap-8">
+                        {/* Custom Card for Combined Kasalo Kusina */}
+                        <div className="group glass dark:glass-dark rounded-3xl p-8 hover:bg-white/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl flex flex-col md:flex-row gap-8 border border-blue-500/30 dark:border-blue-400/30 relative overflow-hidden">
+                            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                <Folder size={180} />
                             </div>
 
-                            <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                            <div className="flex-1 relative z-10">
+                                <div className="flex justify-between items-start mb-6">
+                                    <div className="p-3 bg-blue-500/10 dark:bg-white/10 rounded-2xl text-blue-600 dark:text-white">
+                                        <Folder size={32} />
+                                    </div>
+                                    <div className="px-4 py-1.5 rounded-full text-sm font-medium border bg-green-100 border-green-200 text-green-700">
+                                        Deployed
+                                    </div>
+                                </div>
+
+                                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-blue-500 transition-colors">
+                                    Kasalo Kusina
+                                </h3>
+
+                                <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                                    A comprehensive culinary sharing ecosystem connecting home cooks with food enthusiasts.
+                                    Featuring a high-performance frontend and a scalable microservices-ready backend.
+                                </p>
+
+                                <div className="space-y-6">
+                                    <div className="flex flex-wrap gap-2">
+                                        {['React', 'Node.js', 'MySQL', 'Tailwind', 'WebSockets', 'MongoDB', 'Redis', 'Typescript'].map(tech => (
+                                            <span key={tech} className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 border border-transparent hover:border-white/20 transition-colors">
+                                                {tech}
+                                            </span>
+                                        ))}
+                                    </div>
+
+                                    <hr className="border-gray-200 dark:border-white/10" />
+
+                                    <div className="flex justify-between items-center text-sm font-medium">
+                                        <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                                            <span className="w-2 h-2 rounded-full bg-blue-500"></span>
+                                            kasalo-kusina.vercel.app
+                                        </div>
+                                        <button
+                                            onClick={() => onNavigate('kasalo-kusina')}
+                                            className="flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-full font-bold hover:scale-105 transition-all shadow-lg"
+                                        >
+                                            View Details <ArrowUpRight size={18} />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
+            )}
+
+            {/* Other Projects Section */}
+            <motion.div variants={itemVariants}>
+                <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-8 flex items-center gap-2">
+                    Other Works
+                </h3>
+                <div className="grid md:grid-cols-2 gap-8">
+                    {otherProjects.map((project) => (
+                        <div key={project.id} className="group glass dark:glass-dark rounded-3xl p-6 hover:bg-white/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl flex flex-col h-full border border-white/20">
+                            <div className="flex justify-between items-start mb-4">
+                                <div className="p-3 bg-blue-500/10 dark:bg-white/10 rounded-2xl text-blue-600 dark:text-white">
+                                    <Folder size={24} />
+                                </div>
+                                <div className={`px-3 py-1 rounded-full text-xs font-medium border ${project.status === 'Deployed'
+                                    ? 'bg-green-100 border-green-200 text-green-700'
+                                    : 'bg-yellow-100 border-yellow-200 text-yellow-700'
+                                    }`}>
+                                    {project.status}
+                                </div>
+                            </div>
+
+                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-500 transition-colors">
+                                {project.name}
+                            </h3>
+
+                            <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6 flex-grow">
                                 {project.description}
                             </p>
 
-                            <div className="bg-gray-50 dark:bg-black/50 p-3 rounded border border-gray-200 dark:border-gray-800 font-mono text-xs text-gray-700 dark:text-gray-300">
-                                <div className="flex justify-between mb-2">
-                                    <span className="text-blue-600 dark:text-blue-400">Endpoint:</span>
-                                    <span>{project.endpoint}</span>
+                            <div className="space-y-4">
+                                <div className="flex flex-wrap gap-2">
+                                    {project.techStack.map(tech => (
+                                        <span key={tech} className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 border border-transparent hover:border-white/20 transition-colors">
+                                            {tech}
+                                        </span>
+                                    ))}
                                 </div>
-                                <div className="flex justify-between">
-                                    <span className="text-purple-600 dark:text-purple-400">Avg Latency:</span>
-                                    <span>{project.latency}</span>
-                                </div>
-                            </div>
 
-                            <div className="flex flex-wrap gap-2 pt-2">
-                                {project.techStack.map(tech => (
-                                    <span key={tech} className="text-xs text-gray-600 dark:text-gray-500 border border-gray-300 dark:border-gray-800 px-2 py-1 rounded">
-                          {tech}
-                        </span>
-                                ))}
+                                <hr className="border-gray-200 dark:border-white/10" />
+
+                                <div className="flex justify-between items-center text-sm font-medium">
+                                    <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                                        <span className="w-2 h-2 rounded-full bg-blue-500"></span>
+                                        {project.endpoint || 'Internal Tool'}
+                                    </div>
+                                    {/* Removed Details button for other projects as requested */}
+                                </div>
                             </div>
                         </div>
-                    </TerminalWindow>
-                ))}
-            </div>
-        </div>
+                    ))}
+                </div>
+            </motion.div>
+        </motion.div>
     );
 };

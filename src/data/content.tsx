@@ -29,7 +29,7 @@ export const PROJECTS: Project[] = [
     {
         id: 'p3',
         name: 'kasalo_kusina_frontend',
-        description: 'High-performance frontend interface for a culinary sharing ecosystem. Optimized for user engagement ("vibe-coded") with modular component architecture.',
+        description: 'High-performance frontend interface for a culinary sharing ecosystem. Optimized for user engagement with modular component architecture.',
         techStack: ['ReactJS', 'Tailwind', 'Vite'],
         status: 'In Development',
         endpoint: 'localhost:3001',
@@ -50,7 +50,7 @@ export const EXPERIENCE: Experience[] = [
     {
         id: 'e1',
         role: 'Junior Backend Web Developer',
-        company: 'IThinkWeb Corporation',
+        company: 'QualityTrade - Asia',
         period: 'July 2024 - Present',
         logs: [
             '[INFO] Engineered robust backends with Laravel, DynamoDB, and OpenSearch',

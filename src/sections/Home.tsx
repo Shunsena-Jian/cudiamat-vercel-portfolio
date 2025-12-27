@@ -1,7 +1,6 @@
 import React from 'react';
-import { Terminal, Cpu } from 'lucide-react';
+import { Terminal, ArrowRight, Zap, Target, Globe } from 'lucide-react';
 import { TypewriterText } from '@/components/TypewriterText';
-import { TerminalWindow } from '@/components/TerminalWindow';
 
 interface HomeProps {
     onNavigate: (section: string) => void;
@@ -9,98 +8,77 @@ interface HomeProps {
 
 export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
     return (
-        <div className="space-y-12">
-            <section className="min-h-[50vh] flex flex-col justify-center">
-                <div className="space-y-4">
-                    <div className="inline-block bg-green-100 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-400 px-3 py-1 rounded text-xs mb-4">
-                        <span className="animate-pulse">●</span> JIAN_CUDIAMAT | SYSTEM_READY
+        <div className="space-y-12 pb-24">
+            <section className="min-h-[60vh] flex flex-col justify-center animate-in fade-in slide-in-from-bottom-8 duration-700">
+                <div className="space-y-6">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-sm font-medium text-gray-800 dark:text-gray-200">
+                        <span className="relative flex h-2 w-2">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                        </span>
+                        System Online
                     </div>
-                    <h1 className="text-4xl md:text-7xl font-bold text-gray-900 dark:text-gray-100 tracking-tighter">
-                        <TypewriterText text="_Hello, World." speed={50} />
+
+                    <h1 className="text-5xl md:text-8xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-200 dark:to-gray-400 drop-shadow-sm pb-2 pr-2">
+                        <TypewriterText text=" Hello, World." speed={50} />
                     </h1>
-                    <h2 className="text-xl md:text-2xl text-gray-600 dark:text-gray-500">
-                        I build <span className="text-green-600 dark:text-green-500">scalable backends</span> and <span className="text-blue-600 dark:text-blue-500">distributed systems</span>.
+
+                    <h2 className="text-2xl md:text-3xl font-light text-gray-700 dark:text-gray-300 max-w-2xl leading-tight">
+                        I engineer <span className="font-semibold text-gray-900 dark:text-white">scalable systems</span> that power the modern web.
                     </h2>
-                    <div className="max-w-xl text-gray-600 dark:text-gray-400 leading-relaxed pt-4 border-l-2 border-gray-300 dark:border-gray-800 pl-6">
-                        <p>
-                            Specializing in robust API design, high-concurrency architecture, and database optimization.
-                            I turn coffee into clean, efficient code.
-                        </p>
-                    </div>
-                    <div className="flex gap-4 pt-6">
+
+                    <p className="max-w-xl text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+                        Specializing in robust API design, distributed architecture, and high-performance applications. turning complex problems into elegant code.
+                    </p>
+
+                    <div className="flex flex-wrap gap-4 pt-4">
                         <button
                             onClick={() => onNavigate('projects')}
-                            className="px-6 py-3 bg-green-600 hover:bg-green-500 text-white dark:text-black font-bold rounded transition-colors flex items-center gap-2 shadow-lg shadow-green-600/20"
+                            className="group px-8 py-4 bg-black dark:bg-white text-white dark:text-black font-bold rounded-full transition-all hover:scale-105 hover:shadow-xl flex items-center gap-2"
                         >
-                            <Terminal size={18} />
                             View Projects
+                            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                         </button>
                         <button
                             onClick={() => onNavigate('contact')}
-                            className="px-6 py-3 border border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 text-gray-700 dark:text-gray-300 rounded transition-colors"
+                            className="px-8 py-4 glass text-gray-900 dark:text-white rounded-full transition-all hover:scale-105 hover:bg-white/20 font-medium"
                         >
-                            Contact.sh
+                            Get in Touch
                         </button>
                     </div>
                 </div>
             </section>
 
-            {/* SYSTEM INFO (REPLACES AI) */}
-            <section className="grid md:grid-cols-2 gap-8 items-center">
-                <div>
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                        <Cpu className="text-green-500" />
-                        System Architecture
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-6">
-                        My development environment is tuned for maximum efficiency.
-                        I advocate for open-source tools, linux-based workflows, and automated CI/CD pipelines.
+            <section className="grid md:grid-cols-3 gap-6">
+                <div className="glass dark:glass-dark p-6 rounded-2xl hover:scale-[1.02] transition-transform duration-300">
+                    <div className="h-12 w-12 rounded-2xl bg-blue-500/20 flex items-center justify-center mb-4 text-blue-600 dark:text-blue-400">
+                        <Zap size={24} />
+                    </div>
+                    <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">Performance First</h3>
+                    <p className="text-gray-600 dark:text-gray-400">
+                        Optimized for speed and efficiency. Every millisecond counts in user experience.
                     </p>
-                    <div className="flex flex-wrap gap-2 text-xs text-gray-600 dark:text-gray-500 font-mono">
-                        <span className="bg-gray-200 dark:bg-gray-900 px-2 py-1 rounded border border-gray-300 dark:border-gray-800">os: arch_linux</span>
-                        <span className="bg-gray-200 dark:bg-gray-900 px-2 py-1 rounded border border-gray-300 dark:border-gray-800">shell: zsh</span>
-                        <span className="bg-gray-200 dark:bg-gray-900 px-2 py-1 rounded border border-gray-300 dark:border-gray-800">editor: neovim</span>
-                    </div>
                 </div>
-                <TerminalWindow title="neofetch" className="min-h-[300px] flex items-center justify-center bg-white dark:bg-[#0c0c0c]">
-                    <div className="w-full flex gap-4 font-mono text-sm p-2">
-                        {/* Fake ASCII Art */}
-                        <div className="hidden sm:block text-green-600 dark:text-green-500 font-bold select-none opacity-80 leading-tight">
-<pre>{`       /\\
-      /  \\
-     /    \\
-    /      \\
-   /   /\\   \\
-  /   /  \\   \\
- /   /    \\   \\
-/___/      \\___\\`}</pre>
-                        </div>
 
-                        {/* Info */}
-                        <div className="space-y-1.5 text-xs md:text-sm">
-                            <div><span className="text-green-600 dark:text-green-500">jian_cudiamat</span>@<span className="text-blue-600 dark:text-blue-500">portfolio</span></div>
-                            <div className="text-gray-400 dark:text-gray-600">-------------------</div>
-                            <div><span className="text-purple-600 dark:text-purple-400 font-bold">OS</span>: Arch Linux x86_64</div>
-                            <div><span className="text-purple-600 dark:text-purple-400 font-bold">Host</span>: Backend Mainframe</div>
-                            <div><span className="text-purple-600 dark:text-purple-400 font-bold">Kernel</span>: 6.8.9-arch1-1</div>
-                            <div><span className="text-purple-600 dark:text-purple-400 font-bold">Uptime</span>: 1337 mins</div>
-                            <div><span className="text-purple-600 dark:text-purple-400 font-bold">Shell</span>: zsh 5.9</div>
-                            <div><span className="text-purple-600 dark:text-purple-400 font-bold">CPU</span>: Neural Engine v9</div>
-                            <div><span className="text-purple-600 dark:text-purple-400 font-bold">Memory</span>: 32768MB / 65536MB</div>
-
-                            {/* Color blocks */}
-                            <div className="pt-3 flex gap-1.5">
-                                <span className="w-3 h-3 bg-black dark:bg-black rounded-sm"></span>
-                                <span className="w-3 h-3 bg-red-500 rounded-sm"></span>
-                                <span className="w-3 h-3 bg-green-500 rounded-sm"></span>
-                                <span className="w-3 h-3 bg-yellow-500 rounded-sm"></span>
-                                <span className="w-3 h-3 bg-blue-500 rounded-sm"></span>
-                                <span className="w-3 h-3 bg-purple-500 rounded-sm"></span>
-                                <span className="w-3 h-3 bg-cyan-500 rounded-sm"></span>
-                            </div>
-                        </div>
+                <div className="glass dark:glass-dark p-6 rounded-2xl hover:scale-[1.02] transition-transform duration-300">
+                    <div className="h-12 w-12 rounded-2xl bg-purple-500/20 flex items-center justify-center mb-4 text-purple-600 dark:text-purple-400">
+                        <Target size={24} />
                     </div>
-                </TerminalWindow>
+                    <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">Pixel Perfect</h3>
+                    <p className="text-gray-600 dark:text-gray-400">
+                        Attention to detail in every component, ensuring a consistent and polished look.
+                    </p>
+                </div>
+
+                <div className="glass dark:glass-dark p-6 rounded-2xl hover:scale-[1.02] transition-transform duration-300">
+                    <div className="h-12 w-12 rounded-2xl bg-green-500/20 flex items-center justify-center mb-4 text-green-600 dark:text-green-400">
+                        <Globe size={24} />
+                    </div>
+                    <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">Global Scale</h3>
+                    <p className="text-gray-600 dark:text-gray-400">
+                        Building systems designed to handle global traffic and diverse user bases.
+                    </p>
+                </div>
             </section>
         </div>
     );
