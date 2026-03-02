@@ -6,12 +6,15 @@ import { Experience } from './sections/Experience';
 import { Contact } from './sections/Contact';
 import { KasaloKusinaDetails } from './sections/KasaloKusinaDetails';
 
+import { AnimatePresence, motion } from 'framer-motion';
+
 export default function App() {
     const [activeSection, setActiveSection] = useState('home');
     const [mounted, setMounted] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(false);
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setMounted(true);
 
         // Initialize dark mode class on HTML element
@@ -29,17 +32,17 @@ export default function App() {
     if (!mounted) return null;
 
     return (
-        <div className="min-h-screen text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300 relative overflow-hidden">
-            {/* Background Layer 1: Solid Color */}
-            <div className="fixed inset-0 bg-white dark:bg-[#050505] -z-50" />
-
-            {/* Background Layer 2: Animated Blobs */}
-            <div className="fixed inset-0 overflow-hidden pointer-events-none -z-40">
-                <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-purple-500/40 dark:bg-purple-900/30 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[100px] opacity-70 animate-blob" />
-                <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-500/40 dark:bg-indigo-900/30 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[100px] opacity-70 animate-blob animation-delay-2000" />
-                <div className="absolute -bottom-40 left-1/3 w-[600px] h-[600px] bg-pink-500/40 dark:bg-pink-900/30 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[100px] opacity-70 animate-blob animation-delay-4000" />
-                <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-blue-500/40 dark:bg-blue-900/30 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[100px] opacity-70 animate-blob animation-delay-2000" />
+        <div className="min-h-screen text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300 relative overflow-hidden bg-[#fafafa] dark:bg-[#050505]">
+            {/* Background Layer: Gradient Mesh - Optimized with translate3d and will-change */}
+            <div className="fixed inset-0 overflow-hidden pointer-events-none -z-40 opacity-50 dark:opacity-40 will-change-transform">
+                <div 
+                  className="absolute inset-[-50%] bg-mesh-light dark:bg-mesh-dark animate-mesh opacity-80 mix-blend-normal blur-[100px] transition-colors duration-1000"
+                  style={{ transform: 'translate3d(0,0,0)', backfaceVisibility: 'hidden' }}
+                />
             </div>
+
+            {/* Optimized Noise Texture: Simplified and non-blending if possible */}
+            <div className="fixed inset-0 opacity-[0.012] dark:opacity-[0.025] pointer-events-none -z-30" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'2\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }}></div>
 
             <NavBar
                 currentSection={activeSection}
@@ -49,11 +52,21 @@ export default function App() {
             />
 
             <main className="container mx-auto px-4 pt-32 pb-24 max-w-5xl relative z-10">
-                {activeSection === 'home' && <Home onNavigate={setActiveSection} />}
-                {activeSection === 'projects' && <Projects onNavigate={setActiveSection} />}
-                {activeSection === 'kasalo-kusina' && <KasaloKusinaDetails onBack={() => setActiveSection('projects')} />}
-                {activeSection === 'experience' && <Experience />}
-                {activeSection === 'contact' && <Contact />}
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={activeSection}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                    >
+                        {activeSection === 'home' && <Home onNavigate={setActiveSection} />}
+                        {activeSection === 'projects' && <Projects onNavigate={setActiveSection} />}
+                        {activeSection === 'kasalo-kusina' && <KasaloKusinaDetails onBack={() => setActiveSection('projects')} />}
+                        {activeSection === 'experience' && <Experience />}
+                        {activeSection === 'contact' && <Contact />}
+                    </motion.div>
+                </AnimatePresence>
             </main>
         </div>
     );
