@@ -43,6 +43,15 @@ export const PROJECTS: Project[] = [
         status: 'In Development',
         endpoint: 'localhost:3000',
         latency: '5ms'
+    },
+    {
+        id: 'p5',
+        name: 'event_gallery_app',
+        description: 'A seamless event media sharing platform. Registered guests can instantly capture and upload photos/videos directly to the host\'s Google Drive, featuring real-time synchronization and an administrative control module.',
+        techStack: ['NextJS', 'Supabase', 'Serverless', 'Google Drive API'],
+        status: 'Deployed',
+        endpoint: 'https://panglao-x-rhenzy.vercel.app',
+        latency: '12ms'
     }
 ];
 
@@ -50,8 +59,8 @@ export const EXPERIENCE: Experience[] = [
     {
         id: 'e1',
         role: 'Junior Backend Web Developer',
-        company: 'QualityTrade - Asia',
-        period: 'July 2024 - Present',
+        company: 'Qualitytrade Asia',
+        period: 'July 2024 - March 2026',
         logs: [
             '[INFO] Engineered robust backends with Laravel, DynamoDB, and OpenSearch',
             '[SUCCESS] Designed RESTful APIs for seamless system integration',
@@ -78,11 +87,11 @@ export const SKILLS_CATEGORIES = [
         title: 'Backend',
         icon: <Server size={18} />,
         skills: [
-            { name: 'PHP Laravel', level: '70%' },
-            { name: 'NodeJS', level: '30%' },
-            { name: 'Javascript', level: '40%' },
-            { name: 'Java', level: '20%' },
-            { name: 'Python', level: '15%' }
+            { name: 'PHP Laravel', level: '70' },
+            { name: 'NodeJS', level: '30' },
+            { name: 'Javascript', level: '40' },
+            { name: 'Java', level: '20' },
+            { name: 'Python', level: '15' }
         ]
     },
     {
@@ -90,8 +99,8 @@ export const SKILLS_CATEGORIES = [
         title: 'Frontend',
         icon: <Layout size={18} />,
         skills: [
-            { name: 'Blade', level: '30%' },
-            { name: 'ReactJS', level: '20%' }
+            { name: 'Blade', level: '30' },
+            { name: 'ReactJS', level: '20' }
         ]
     },
     {
@@ -99,9 +108,9 @@ export const SKILLS_CATEGORIES = [
         title: 'Database',
         icon: <Database size={18} />,
         skills: [
-            { name: 'MySQL', level: '75%' },
-            { name: 'MongoDB', level: '75%' },
-            { name: 'DynamoDB', level: '35%' }
+            { name: 'MySQL', level: '75' },
+            { name: 'MongoDB', level: '75' },
+            { name: 'DynamoDB', level: '35' }
         ]
     },
     {
@@ -109,11 +118,11 @@ export const SKILLS_CATEGORIES = [
         title: 'Others',
         icon: <Box size={18} />,
         skills: [
-            { name: 'Github', level: '90%' },
-            { name: 'RESTful', level: '75%' },
-            { name: 'Postman', level: '75%' },
-            { name: 'Stripe', level: '50%' },
-            { name: 'Agile SDLC', level: '100%' }
+            { name: 'Github', level: '90' },
+            { name: 'RESTful', level: '75' },
+            { name: 'Postman', level: '75' },
+            { name: 'Stripe', level: '50' },
+            { name: 'Agile SDLC', level: '100' }
         ]
     }
 ];

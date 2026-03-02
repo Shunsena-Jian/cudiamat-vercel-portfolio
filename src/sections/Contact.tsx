@@ -45,7 +45,7 @@ export const Contact: React.FC = () => {
                 <form ref={form} className="space-y-6" onSubmit={sendEmail}>
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Name</label>
+                            <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Your Name</label>
                             <input
                                 type="text"
                                 name="user_name"
@@ -56,7 +56,7 @@ export const Contact: React.FC = () => {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Email</label>
+                            <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Your Email</label>
                             <input
                                 type="email"
                                 name="user_email"
@@ -68,7 +68,7 @@ export const Contact: React.FC = () => {
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Message</label>
+                        <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Your Message</label>
                         <textarea
                             name="message"
                             required
