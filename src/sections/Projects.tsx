@@ -22,6 +22,29 @@ const itemVariants = {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
 };
 
+const isUrl = (str: string) => {
+    try {
+        const url = new URL(str);
+        return url.protocol === 'http:' || url.protocol === 'https:';
+    } catch {
+        return str.startsWith('http://') || str.startsWith('https://') || str.includes('.vercel.app') || str.includes('localhost:');
+    }
+};
+
+const VisitButton: React.FC<{ url: string }> = ({ url }) => {
+    const formattedUrl = url.startsWith('http') ? url : `https://${url}`;
+    return (
+        <a
+            href={formattedUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-6 py-3 bg-blue-500 text-white rounded-full font-bold hover:scale-105 transition-all shadow-lg text-sm"
+        >
+            Visit Site <ExternalLink size={16} />
+        </a>
+    );
+};
+
 export const Projects: React.FC<ProjectsProps> = ({ onNavigate }) => {
     // Filter projects for Featured vs Others
     // IDs p3 and p4 correspond to "kasalo_kusina_frontend" and "kasalo_kusina_backend"
@@ -93,12 +116,15 @@ export const Projects: React.FC<ProjectsProps> = ({ onNavigate }) => {
                                             <span className="w-2 h-2 rounded-full bg-blue-500"></span>
                                             kasalo-kusina.vercel.app
                                         </div>
-                                        <button
-                                            onClick={() => onNavigate('kasalo-kusina')}
-                                            className="flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-full font-bold hover:scale-105 transition-all shadow-lg"
-                                        >
-                                            View Details <ArrowUpRight size={18} />
-                                        </button>
+                                        <div className="flex gap-4">
+                                            <VisitButton url="https://kasalo-kusina.vercel.app" />
+                                            <button
+                                                onClick={() => onNavigate('kasalo-kusina')}
+                                                className="flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-full font-bold hover:scale-105 transition-all shadow-lg"
+                                            >
+                                                Details <ArrowUpRight size={18} />
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -151,7 +177,9 @@ export const Projects: React.FC<ProjectsProps> = ({ onNavigate }) => {
                                         <span className="w-2 h-2 rounded-full bg-blue-500"></span>
                                         {project.endpoint || 'Internal Tool'}
                                     </div>
-                                    {/* Removed Details button for other projects as requested */}
+                                    {project.endpoint && isUrl(project.endpoint) && (
+                                        <VisitButton url={project.endpoint} />
+                                    )}
                                 </div>
                             </div>
                         </div>

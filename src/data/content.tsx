@@ -10,7 +10,7 @@ import { Project, Experience } from '@/types.ts';
 export const PROJECTS: Project[] = [
     {
         id: 'p1',
-        name: 'cadet_information_system',
+        name: 'Cadet Information System',
         description: 'Centralized cadet lifecycle management core. Handles high-concurrency enrollment transactions, tuition processing, and administrative administrative workflows for the academy.',
         techStack: ['PHP', 'Laravel', 'MySQL', 'Bootstrap'],
         status: 'Deployed',
@@ -19,7 +19,7 @@ export const PROJECTS: Project[] = [
     },
     {
         id: 'p2',
-        name: 'intellidocs',
+        name: 'Intellidocs',
         description: 'Enterprise document automation engine for SLU. Features dynamic template rendering, version control, print spooling, and real-time document editing capabilities.',
         techStack: ['React', 'Node.js', 'MongoDB', 'WebSocket'],
         status: 'Deployed',
@@ -28,7 +28,7 @@ export const PROJECTS: Project[] = [
     },
     {
         id: 'p3',
-        name: 'kasalo_kusina_frontend',
+        name: 'Kasalo Kusina (Frontend)',
         description: 'High-performance frontend interface for a culinary sharing ecosystem. Optimized for user engagement with modular component architecture.',
         techStack: ['ReactJS', 'Tailwind', 'Vite'],
         status: 'In Development',
@@ -37,7 +37,7 @@ export const PROJECTS: Project[] = [
     },
     {
         id: 'p4',
-        name: 'kasalo_kusina_backend',
+        name: 'Kasalo Kusina (Backend)',
         description: 'Scalable RESTful API service supporting the culinary platform. Implements complex query logic, secure authentication gateways, and optimized data retrieval.',
         techStack: ['NodeJS', 'Express', 'MySQL', 'JWT'],
         status: 'In Development',
@@ -46,7 +46,7 @@ export const PROJECTS: Project[] = [
     },
     {
         id: 'p5',
-        name: 'event_gallery_app',
+        name: 'Event Gallery App',
         description: 'A seamless event media sharing platform. Registered guests can instantly capture and upload photos/videos directly to the host\'s Google Drive, featuring real-time synchronization and an administrative control module.',
         techStack: ['NextJS', 'Supabase', 'Serverless', 'Google Drive API'],
         status: 'Deployed',

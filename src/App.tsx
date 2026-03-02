@@ -9,7 +9,7 @@ import { KasaloKusinaDetails } from './sections/KasaloKusinaDetails';
 export default function App() {
     const [activeSection, setActiveSection] = useState('home');
     const [mounted, setMounted] = useState(false);
-    const [isDarkMode, setIsDarkMode] = useState(true);
+    const [isDarkMode, setIsDarkMode] = useState(false);
 
     useEffect(() => {
         setMounted(true);
