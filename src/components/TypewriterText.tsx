@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface TypewriterTextProps {
     text: string;
@@ -16,35 +16,48 @@ export const TypewriterText: React.FC<TypewriterTextProps> = ({
     cursor = true
 }) => {
     const [displayedText, setDisplayedText] = useState('');
-    const [started, setStarted] = useState(false);
+    const indexRef = useRef(0);
+    const textRef = useRef(text);
+    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+    // Update text ref when text prop changes
     useEffect(() => {
-        const startTimeout = setTimeout(() => {
-            setStarted(true);
+        textRef.current = text;
+    }, [text]);
+
+    // Main typing effect
+    useEffect(() => {
+        const startDelay = setTimeout(() => {
+            indexRef.current = 0;
+            setDisplayedText('');
+
+            intervalRef.current = setInterval(() => {
+                const currentIndex = indexRef.current;
+                const currentText = textRef.current;
+                
+                if (currentIndex < currentText.length) {
+                    setDisplayedText(prev => prev + currentText.charAt(currentIndex));
+                    indexRef.current = currentIndex + 1;
+                } else if (intervalRef.current) {
+                    clearInterval(intervalRef.current);
+                    intervalRef.current = null;
+                }
+            }, speed);
         }, delay);
-        return () => clearTimeout(startTimeout);
-    }, [delay]);
 
-    useEffect(() => {
-        if (!started) return;
-
-        let index = 0;
-        const interval = setInterval(() => {
-            if (index < text.length) {
-                setDisplayedText((prev) => prev + text.charAt(index));
-                index++;
-            } else {
-                clearInterval(interval);
+        return () => {
+            clearTimeout(startDelay);
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current);
+                intervalRef.current = null;
             }
-        }, speed);
-
-        return () => clearInterval(interval);
-    }, [text, speed, started]);
+        };
+    }, [speed, delay]);
 
     return (
-        <span className={`${className}`}>
-      {displayedText}
+        <span className={className}>
+            {displayedText}
             {cursor && <span className="animate-blink ml-1 bg-terminal-cursor w-2 h-4 inline-block align-middle"></span>}
-    </span>
+        </span>
     );
 };

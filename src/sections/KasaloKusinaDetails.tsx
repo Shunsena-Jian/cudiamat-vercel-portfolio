@@ -1,25 +1,11 @@
 import React from 'react';
 import { ArrowLeft, ExternalLink, Server, Database, Layout, Globe } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { containerVariants, itemVariants } from '@/constants/motion';
 
 interface KasaloKusinaDetailsProps {
     onBack: () => void;
 }
-
-const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.1
-        }
-    }
-};
-
-const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-};
 
 export const KasaloKusinaDetails: React.FC<KasaloKusinaDetailsProps> = ({ onBack }) => {
     return (

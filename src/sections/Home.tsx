@@ -1,10 +1,31 @@
 import React from 'react';
 import { Zap, Target, Globe, ArrowRight } from 'lucide-react';
 import { TypewriterText } from '@/components/TypewriterText';
+import { PERSONAL, FEATURES, ANIMATION } from '@/config/portfolio';
 
 interface HomeProps {
     onNavigate: (section: string) => void;
 }
+
+// Map icon strings to actual components
+const iconMap = {
+    zap: Zap,
+    target: Target,
+    globe: Globe,
+};
+
+// Map color strings to color classes
+const colorMap = {
+    blue: 'from-blue-500/20 to-blue-600/5 dark:from-blue-400/20 dark:to-blue-500/5',
+    purple: 'from-purple-500/20 to-purple-600/5 dark:from-purple-400/20 dark:to-purple-500/5',
+    emerald: 'from-emerald-500/20 to-emerald-600/5 dark:from-emerald-400/20 dark:to-emerald-500/5',
+};
+
+const textColorMap = {
+    blue: 'text-blue-600 dark:text-blue-400',
+    purple: 'text-purple-600 dark:text-purple-400',
+    emerald: 'text-emerald-600 dark:text-emerald-400',
+};
 
 export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
     return (
@@ -16,19 +37,19 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                         </span>
-                        System Online
+                        {PERSONAL.status}
                     </div>
 
                     <h1 className="text-6xl md:text-8xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-gray-900 via-gray-700 to-gray-500 dark:from-white dark:via-gray-200 dark:to-gray-500 pb-2 pr-2">
-                        <TypewriterText text=" Hello, World." speed={50} />
+                        <TypewriterText text=" Hello, World." speed={ANIMATION.typewriterSpeed} />
                     </h1>
 
                     <h2 className="text-2xl md:text-4xl font-light text-gray-600 dark:text-gray-400 max-w-3xl leading-tight tracking-tight">
-                        I engineer <span className="font-semibold text-gray-900 dark:text-white">scalable systems</span> that power the modern web.
+                        {PERSONAL.shortBio}
                     </h2>
 
                     <p className="max-w-xl text-lg text-gray-500 dark:text-gray-400 leading-relaxed font-light">
-                        Specializing in robust API design, distributed architecture, and high-performance applications. turning complex problems into elegant code.
+                        {PERSONAL.fullBio}
                     </p>
 
                     <div className="flex flex-wrap gap-4 pt-6">
@@ -50,35 +71,23 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             </section>
 
             <section className="grid md:grid-cols-3 gap-8">
-                <div className="glass dark:glass-dark p-8 rounded-3xl hover:-translate-y-2 transition-all duration-500 hover:shadow-spatial dark:hover:shadow-spatial-dark group">
-                    <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-600/5 dark:from-blue-400/20 dark:to-blue-500/5 flex items-center justify-center mb-6 text-blue-600 dark:text-blue-400 shadow-inner">
-                        <Zap size={26} className="group-hover:scale-110 transition-transform duration-300" />
-                    </div>
-                    <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white tracking-tight">Performance First</h3>
-                    <p className="text-gray-500 dark:text-gray-400 font-light leading-relaxed">
-                        Optimized for speed and efficiency. Every millisecond counts in user experience.
-                    </p>
-                </div>
+                {FEATURES.map((feature) => {
+                    const IconComponent = iconMap[feature.icon as keyof typeof iconMap] || Zap;
+                    const colorClasses = colorMap[feature.color as keyof typeof colorMap] || colorMap.blue;
+                    const textColor = textColorMap[feature.color as keyof typeof textColorMap] || textColorMap.blue;
 
-                <div className="glass dark:glass-dark p-8 rounded-3xl hover:-translate-y-2 transition-all duration-500 hover:shadow-spatial dark:hover:shadow-spatial-dark group">
-                    <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-purple-500/20 to-purple-600/5 dark:from-purple-400/20 dark:to-purple-500/5 flex items-center justify-center mb-6 text-purple-600 dark:text-purple-400 shadow-inner">
-                        <Target size={26} className="group-hover:scale-110 transition-transform duration-300" />
-                    </div>
-                    <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white tracking-tight">Pixel Perfect</h3>
-                    <p className="text-gray-500 dark:text-gray-400 font-light leading-relaxed">
-                        Attention to detail in every component, ensuring a consistent and polished look.
-                    </p>
-                </div>
-
-                <div className="glass dark:glass-dark p-8 rounded-3xl hover:-translate-y-2 transition-all duration-500 hover:shadow-spatial dark:hover:shadow-spatial-dark group">
-                    <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/5 dark:from-emerald-400/20 dark:to-emerald-500/5 flex items-center justify-center mb-6 text-emerald-600 dark:text-emerald-400 shadow-inner">
-                        <Globe size={26} className="group-hover:scale-110 transition-transform duration-300" />
-                    </div>
-                    <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white tracking-tight">Global Scale</h3>
-                    <p className="text-gray-500 dark:text-gray-400 font-light leading-relaxed">
-                        Building systems designed to handle global traffic and diverse user bases.
-                    </p>
-                </div>
+                    return (
+                        <div key={feature.id} className="glass dark:glass-dark p-8 rounded-3xl hover:-translate-y-2 transition-all duration-500 hover:shadow-spatial dark:hover:shadow-spatial-dark group">
+                            <div className={`h-14 w-14 rounded-2xl bg-gradient-to-br ${colorClasses} flex items-center justify-center mb-6 ${textColor} shadow-inner`}>
+                                <IconComponent size={26} className="group-hover:scale-110 transition-transform duration-300" />
+                            </div>
+                            <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white tracking-tight">{feature.title}</h3>
+                            <p className="text-gray-500 dark:text-gray-400 font-light leading-relaxed">
+                                {feature.description}
+                            </p>
+                        </div>
+                    );
+                })}
             </section>
         </div>
     );

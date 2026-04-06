@@ -1,26 +1,12 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Folder, ExternalLink, ArrowUpRight } from 'lucide-react';
-import { PROJECTS } from '../data/content';
+import { PROJECTS } from '../config/portfolio';
 import { motion } from 'framer-motion';
+import { containerVariants, itemVariants } from '@/constants/motion';
 
 interface ProjectsProps {
     onNavigate: (section: string) => void;
 }
-
-const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.1
-        }
-    }
-};
-
-const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-};
 
 const isUrl = (str: string) => {
     try {
@@ -46,8 +32,12 @@ const VisitButton: React.FC<{ url: string }> = ({ url }) => {
 };
 
 export const Projects: React.FC<ProjectsProps> = ({ onNavigate }) => {
-    const featuredProjects = PROJECTS.filter(p => p.id === 'p3' || p.id === 'p4');
-    const otherProjects = PROJECTS.filter(p => p.id !== 'p3' && p.id !== 'p4');
+    // Memoize filtered projects to prevent recalculation on every render
+    const { featuredProjects, otherProjects } = useMemo(() => {
+        const featured = PROJECTS.filter(p => p.id === 'p3' || p.id === 'p4');
+        const others = PROJECTS.filter(p => p.id !== 'p3' && p.id !== 'p4');
+        return { featuredProjects: featured, otherProjects: others };
+    }, []);
 
     return (
         <motion.div

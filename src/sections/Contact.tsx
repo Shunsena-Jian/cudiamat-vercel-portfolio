@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Send, Github, Linkedin, Mail, Loader2, CheckCircle, XCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
+import { SOCIAL, CONTACT } from '@/config/portfolio';
 
 export const Contact: React.FC = () => {
     const form = useRef<HTMLFormElement>(null);
@@ -37,7 +38,7 @@ export const Contact: React.FC = () => {
                     Get in Touch
                 </h2>
                 <p className="text-gray-500 dark:text-gray-400 text-lg font-light leading-relaxed">
-                    Have a project in mind or just want to say hi? I'd love to hear from you.
+                    {CONTACT.defaultStatusMessage}
                 </p>
             </header>
 
@@ -51,7 +52,7 @@ export const Contact: React.FC = () => {
                                 name="user_name"
                                 required
                                 className="w-full bg-white/40 dark:bg-black/20 backdrop-blur-md border border-gray-200/50 dark:border-white/10 p-4 rounded-2xl text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:outline-none transition-all shadow-inner"
-                                placeholder="John Doe"
+                                placeholder={CONTACT.formPlaceholders.name}
                             />
                         </div>
 
@@ -62,7 +63,7 @@ export const Contact: React.FC = () => {
                                 name="user_email"
                                 required
                                 className="w-full bg-white/40 dark:bg-black/20 backdrop-blur-md border border-gray-200/50 dark:border-white/10 p-4 rounded-2xl text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:outline-none transition-all shadow-inner"
-                                placeholder="john@example.com"
+                                placeholder={CONTACT.formPlaceholders.email}
                             />
                         </div>
                     </div>
@@ -74,7 +75,7 @@ export const Contact: React.FC = () => {
                             required
                             rows={6}
                             className="w-full bg-white/40 dark:bg-black/20 backdrop-blur-md border border-gray-200/50 dark:border-white/10 p-4 rounded-2xl text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:outline-none transition-all resize-none shadow-inner"
-                            placeholder="Tell me about your project..."
+                            placeholder={CONTACT.formPlaceholders.message}
                         />
                     </div>
 
@@ -112,15 +113,15 @@ export const Contact: React.FC = () => {
             </div>
 
             <div className="mt-16 flex justify-center gap-6">
-                <a href="https://github.com/Shunsena-Jian" target="_blank" rel="noopener noreferrer" className="p-4 rounded-full glass dark:glass-dark text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white hover:-translate-y-1 hover:shadow-spatial dark:hover:shadow-spatial-dark transition-all duration-300">
+                <a href={SOCIAL.github} target="_blank" rel="noopener noreferrer" className="p-4 rounded-full glass dark:glass-dark text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white hover:-translate-y-1 hover:shadow-spatial dark:hover:shadow-spatial-dark transition-all duration-300">
                     <Github size={24} />
                     <span className="sr-only">GitHub</span>
                 </a>
-                <a href="https://www.linkedin.com/in/jian-raphael-cudiamat-70b1a5269/" target="_blank" rel="noopener noreferrer" className="p-4 rounded-full glass dark:glass-dark text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:-translate-y-1 hover:shadow-spatial dark:hover:shadow-spatial-dark transition-all duration-300">
+                <a href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer" className="p-4 rounded-full glass dark:glass-dark text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:-translate-y-1 hover:shadow-spatial dark:hover:shadow-spatial-dark transition-all duration-300">
                     <Linkedin size={24} />
                     <span className="sr-only">LinkedIn</span>
                 </a>
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jian.r.cudiamat@gmail.com" target="_blank" rel="noopener noreferrer" className="p-4 rounded-full glass dark:glass-dark text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:-translate-y-1 hover:shadow-spatial dark:hover:shadow-spatial-dark transition-all duration-300">
+                <a href={SOCIAL.emailLink} target="_blank" rel="noopener noreferrer" className="p-4 rounded-full glass dark:glass-dark text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:-translate-y-1 hover:shadow-spatial dark:hover:shadow-spatial-dark transition-all duration-300">
                     <Mail size={24} />
                     <span className="sr-only">Email</span>
                 </a>

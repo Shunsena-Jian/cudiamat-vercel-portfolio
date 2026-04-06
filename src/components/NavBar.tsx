@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Home, Folder, Briefcase, Mail, Sun, Moon } from 'lucide-react';
 
 interface NavBarProps {
@@ -8,21 +8,26 @@ interface NavBarProps {
     toggleTheme: () => void;
 }
 
+// Move nav items outside component to prevent recreation on every render
+const NAV_ITEMS = [
+    { id: 'home', icon: Home, label: 'Home' },
+    { id: 'projects', icon: Folder, label: 'Projects' },
+    { id: 'experience', icon: Briefcase, label: 'Experience' },
+    { id: 'contact', icon: Mail, label: 'Contact' },
+] as const;
+
 export const NavBar: React.FC<NavBarProps> = ({ currentSection, onNavigate, isDarkMode, toggleTheme }) => {
-    const items = [
-        { id: 'home', icon: <Home size={20} />, label: 'Home' },
-        { id: 'projects', icon: <Folder size={20} />, label: 'Projects' },
-        { id: 'experience', icon: <Briefcase size={20} />, label: 'Experience' },
-        { id: 'contact', icon: <Mail size={20} />, label: 'Contact' },
-    ];
+    const handleNavigate = useCallback((id: string) => {
+        onNavigate(id);
+    }, [onNavigate]);
 
     return (
         <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
             <nav className="glass dark:glass-dark rounded-full px-2 py-2 flex items-center gap-2 transition-all duration-500 hover:shadow-spatial dark:hover:shadow-spatial-dark">
-                {items.map((item) => (
+                {NAV_ITEMS.map((item) => (
                     <button
                         key={item.id}
-                        onClick={() => onNavigate(item.id)}
+                        onClick={() => handleNavigate(item.id)}
                         className={`
                             p-3 rounded-full transition-all duration-300 relative group
                             ${currentSection === item.id
@@ -31,7 +36,7 @@ export const NavBar: React.FC<NavBarProps> = ({ currentSection, onNavigate, isDa
                         `}
                         aria-label={item.label}
                     >
-                        {item.icon}
+                        <item.icon size={20} />
                         <span className="absolute -bottom-10 left-1/2 -translate-x-1/2 px-3 py-1.5 glass dark:glass-dark text-gray-900 dark:text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-spatial">
                             {item.label}
                         </span>

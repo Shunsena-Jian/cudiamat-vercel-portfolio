@@ -1,7 +1,7 @@
 import React from 'react';
 import { Database, Globe, Server, Cloud } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { EXPERIENCE, SKILLS_CATEGORIES } from '../data/content';
+import { EXPERIENCE, SKILLS_CATEGORIES } from '../config/portfolio';
 
 export const Experience: React.FC = () => {
     return (
