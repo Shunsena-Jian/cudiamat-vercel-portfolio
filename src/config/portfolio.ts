@@ -123,12 +123,13 @@ export const PROJECTS: Project[] = [
     },
     {
         id: 'p5',
-        name: 'Event Gallery App',
-        description: 'A seamless event media sharing platform. Registered guests can instantly capture and upload photos/videos directly to the host\'s Google Drive, featuring real-time synchronization and an administrative control module.',
+        name: 'EShareMo',
+        role: 'Founding Technical Engineer',
+        description: 'An event photo and video collection platform where guests upload through invite links or a shared QR code, with originals organized in the host\'s Google Drive.',
         techStack: ['NextJS', 'Supabase', 'Serverless', 'Google Drive API'],
-        status: 'Deployed',
-        endpoint: 'https://panglao-x-rhenzy.vercel.app',
-        latency: '12ms'
+        status: 'In Development',
+        endpoint: 'https://www.esharemo.com',
+        latency: 'n/a'
     }
 ];
 
@@ -138,6 +139,18 @@ export const PROJECTS: Project[] = [
 export const EXPERIENCE: Experience[] = [
     {
         id: 'e1',
+        role: 'Junior Process Associate',
+        company: 'ThoughtFocus',
+        period: 'July 2026 - Present',
+        logs: [
+            '[INFO] Triaged support tickets and routed issues to the right teams',
+            '[SUCCESS] Responded to clients through email with clear, timely updates',
+            '[DEBUG] Handled client calls and documented follow-up actions',
+            '[WARN] Supported day-to-day service operations across multiple channels'
+        ]
+    },
+    {
+        id: 'e2',
         role: 'Junior Backend Web Developer',
         company: 'Qualitytrade Asia',
         period: 'July 2024 - March 2026',
@@ -149,7 +162,7 @@ export const EXPERIENCE: Experience[] = [
         ]
     },
     {
-        id: 'e2',
+        id: 'e3',
         role: '(Intern) Computer Programmer',
         company: 'Philippine Military Academy',
         period: 'January 2024 - May 2024',

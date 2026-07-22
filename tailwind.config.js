@@ -13,6 +13,8 @@ export default {
         'glass-highlight': 'rgba(255, 255, 255, 0.5)',
         'dark-glass-border': 'rgba(255, 255, 255, 0.08)',
         'dark-glass-surface': 'rgba(0, 0, 0, 0.4)',
+        'accent': 'rgb(var(--accent))',
+        'accent-hover': 'rgb(var(--accent-hover))',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

@@ -2,6 +2,7 @@ import React from 'react';
 import { Zap, Target, Globe, ArrowRight } from 'lucide-react';
 import { TypewriterText } from '@/components/TypewriterText';
 import { PERSONAL, FEATURES, ANIMATION } from '@/config/portfolio';
+import { TerminalShell } from '@/components/TerminalShell';
 
 interface HomeProps {
     onNavigate: (section: string) => void;
@@ -30,42 +31,50 @@ const textColorMap = {
 export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
     return (
         <div className="space-y-24 pb-32">
-            <section className="min-h-[65vh] flex flex-col justify-center animate-in fade-in slide-in-from-bottom-8 duration-1000 relative">
-                <div className="space-y-8 relative z-10 max-w-4xl">
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass dark:glass-dark text-xs font-semibold text-gray-700 dark:text-gray-300 shadow-sm mb-2">
-                        <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                        </span>
-                        {PERSONAL.status}
+            <section className="min-h-[70vh] flex flex-col justify-center animate-in fade-in slide-in-from-bottom-8 duration-1000 relative">
+                <div className="grid lg:grid-cols-12 gap-12 items-center w-full">
+                    {/* Left Column: Typography & CTAs */}
+                    <div className="lg:col-span-7 space-y-8 relative z-10 w-full max-w-2xl text-left">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass dark:glass-dark text-xs font-semibold text-gray-700 dark:text-gray-300 shadow-sm mb-2 w-fit">
+                            <span className="relative flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+                            </span>
+                            {PERSONAL.status}
+                        </div>
+
+                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-gray-900 via-gray-700 to-gray-500 dark:from-white dark:via-gray-200 dark:to-gray-500 pb-2 pr-2 leading-none">
+                            <TypewriterText text=" Hello, World." speed={ANIMATION.typewriterSpeed} />
+                        </h1>
+
+                        <h2 className="text-2xl md:text-3xl font-light text-gray-600 dark:text-gray-400 leading-tight tracking-tight">
+                            {PERSONAL.shortBio}
+                        </h2>
+
+                        <p className="max-w-xl text-base md:text-lg text-gray-500 dark:text-gray-400 leading-relaxed font-light">
+                            {PERSONAL.fullBio}
+                        </p>
+
+                        <div className="flex flex-wrap gap-4 pt-4">
+                            <button
+                                onClick={() => onNavigate('projects')}
+                                className="group px-8 py-4 bg-accent hover:bg-accent-hover text-white dark:text-black font-semibold rounded-full transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(var(--accent),0.3)] flex items-center gap-2 border border-transparent"
+                            >
+                                View Projects
+                                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                            </button>
+                            <button
+                                onClick={() => onNavigate('contact')}
+                                className="px-8 py-4 glass dark:glass-dark text-gray-900 dark:text-white font-semibold rounded-full transition-all duration-300 hover:scale-105 hover:shadow-spatial dark:hover:shadow-spatial-dark"
+                            >
+                                Get in Touch
+                            </button>
+                        </div>
                     </div>
 
-                    <h1 className="text-6xl md:text-8xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-gray-900 via-gray-700 to-gray-500 dark:from-white dark:via-gray-200 dark:to-gray-500 pb-2 pr-2">
-                        <TypewriterText text=" Hello, World." speed={ANIMATION.typewriterSpeed} />
-                    </h1>
-
-                    <h2 className="text-2xl md:text-4xl font-light text-gray-600 dark:text-gray-400 max-w-3xl leading-tight tracking-tight">
-                        {PERSONAL.shortBio}
-                    </h2>
-
-                    <p className="max-w-xl text-lg text-gray-500 dark:text-gray-400 leading-relaxed font-light">
-                        {PERSONAL.fullBio}
-                    </p>
-
-                    <div className="flex flex-wrap gap-4 pt-6">
-                        <button
-                            onClick={() => onNavigate('projects')}
-                            className="group px-8 py-4 bg-gray-900/90 dark:bg-white/90 backdrop-blur-md text-white dark:text-black font-semibold rounded-full transition-all duration-300 hover:scale-105 hover:bg-black dark:hover:bg-white hover:shadow-spatial dark:hover:shadow-spatial-dark flex items-center gap-2 border border-transparent dark:border-white/20"
-                        >
-                            View Projects
-                            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                        </button>
-                        <button
-                            onClick={() => onNavigate('contact')}
-                            className="px-8 py-4 glass dark:glass-dark text-gray-900 dark:text-white font-semibold rounded-full transition-all duration-300 hover:scale-105 hover:shadow-spatial dark:hover:shadow-spatial-dark"
-                        >
-                            Get in Touch
-                        </button>
+                    {/* Right Column: Interactive Terminal Simulator */}
+                    <div className="lg:col-span-5 w-full relative z-10">
+                        <TerminalShell />
                     </div>
                 </div>
             </section>

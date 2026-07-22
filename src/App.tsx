@@ -6,12 +6,34 @@ import { Experience } from './sections/Experience';
 import { Contact } from './sections/Contact';
 import { KasaloKusinaDetails } from './sections/KasaloKusinaDetails';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
 
 export default function App() {
+    const { scrollYProgress } = useScroll();
+    const scaleX = useSpring(scrollYProgress, {
+        stiffness: 100,
+        damping: 30,
+        restDelta: 0.001
+    });
+
     const [activeSection, setActiveSection] = useState('home');
     const [mounted, setMounted] = useState(false);
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(() => {
+        if (typeof window !== 'undefined') {
+            return localStorage.getItem('theme') === 'dark' || 
+                   (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        }
+        return false;
+    });
+    const [accentTheme, setAccentTheme] = useState<'emerald' | 'blue' | 'purple' | 'amber'>(() => {
+        if (typeof window !== 'undefined') {
+            const saved = localStorage.getItem('accentTheme');
+            if (saved === 'emerald' || saved === 'blue' || saved === 'purple' || saved === 'amber') {
+                return saved;
+            }
+        }
+        return 'emerald';
+    });
 
     useEffect(() => {
         // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -20,10 +42,16 @@ export default function App() {
         // Initialize dark mode class on HTML element
         if (isDarkMode) {
             document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
         } else {
             document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
         }
     }, [isDarkMode]);
+
+    useEffect(() => {
+        localStorage.setItem('accentTheme', accentTheme);
+    }, [accentTheme]);
 
     const toggleTheme = () => {
         setIsDarkMode((prev) => !prev);
@@ -32,7 +60,13 @@ export default function App() {
     if (!mounted) return null;
 
     return (
-        <div className="min-h-screen text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300 relative overflow-hidden bg-[#fafafa] dark:bg-[#050505]">
+        <div className={`min-h-screen text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300 relative overflow-hidden bg-[#fafafa] dark:bg-[#050505] theme-${accentTheme}`}>
+            {/* Dynamic Scroll Progress Bar */}
+            <motion.div 
+                className="fixed top-0 left-0 right-0 h-1 bg-accent origin-left z-50 shadow-[0_0_10px_rgb(var(--accent))]" 
+                style={{ scaleX }} 
+            />
+
             {/* Background Layer: Gradient Mesh - Optimized with translate3d and will-change */}
             <div className="fixed inset-0 overflow-hidden pointer-events-none -z-40 opacity-50 dark:opacity-40 will-change-transform">
                 <div 
@@ -49,6 +83,8 @@ export default function App() {
                 onNavigate={setActiveSection}
                 isDarkMode={isDarkMode}
                 toggleTheme={toggleTheme}
+                accentTheme={accentTheme}
+                onChangeAccent={setAccentTheme}
             />
 
             <main className="container mx-auto px-4 pt-32 pb-24 max-w-5xl relative z-10">
@@ -61,7 +97,7 @@ export default function App() {
                         transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
                         {activeSection === 'home' && <Home onNavigate={setActiveSection} />}
-                        {activeSection === 'projects' && <Projects onNavigate={setActiveSection} />}
+                        {activeSection === 'projects' && <Projects />}
                         {activeSection === 'kasalo-kusina' && <KasaloKusinaDetails onBack={() => setActiveSection('projects')} />}
                         {activeSection === 'experience' && <Experience />}
                         {activeSection === 'contact' && <Contact />}

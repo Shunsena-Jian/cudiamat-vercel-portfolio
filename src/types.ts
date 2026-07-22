@@ -3,6 +3,7 @@ import React from 'react';
 export interface Project {
     id: string;
     name: string;
+    role?: string;
     description: string;
     techStack: string[];
     status: 'Deployed' | 'In Development' | 'Archived';

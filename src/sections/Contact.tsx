@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Send, Github, Linkedin, Mail, Loader2, CheckCircle, XCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { SOCIAL, CONTACT } from '@/config/portfolio';
+import { SectionHeader } from '../components/SectionHeader';
 
 export const Contact: React.FC = () => {
     const form = useRef<HTMLFormElement>(null);
@@ -33,14 +34,10 @@ export const Contact: React.FC = () => {
 
     return (
         <div className="max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-1000 pb-32">
-            <header className="mb-16 text-center">
-                <h2 className="text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-gray-900 to-gray-500 dark:from-white dark:to-gray-400 mb-4 inline-block pb-2">
-                    Get in Touch
-                </h2>
-                <p className="text-gray-500 dark:text-gray-400 text-lg font-light leading-relaxed">
-                    {CONTACT.defaultStatusMessage}
-                </p>
-            </header>
+            <SectionHeader 
+                title="Get in Touch" 
+                description={CONTACT.defaultStatusMessage}
+            />
 
             <div className="glass dark:glass-dark rounded-3xl p-8 md:p-12 border-t border-l border-white/40 dark:border-white/10 relative shadow-spatial dark:shadow-spatial-dark">
                 <form ref={form} className="space-y-8" onSubmit={sendEmail}>
@@ -82,10 +79,13 @@ export const Contact: React.FC = () => {
                     <button
                         type="submit"
                         disabled={status === 'sending' || status === 'success'}
-                        className={`w-full font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] border border-transparent dark:border-white/20 ${status === 'success' ? 'bg-emerald-600 text-white cursor-default' :
-                                status === 'error' ? 'bg-red-600 text-white' :
-                                    'bg-gray-900/90 dark:bg-white/90 backdrop-blur-md text-white dark:text-black hover:shadow-spatial dark:hover:shadow-spatial-dark hover:bg-black dark:hover:bg-white'
-                            }`}
+                        className={`w-full font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] border border-transparent dark:border-white/20 ${
+                            status === 'success' 
+                                ? 'bg-emerald-600 text-white cursor-default shadow-[0_0_20px_rgba(16,185,129,0.3)]' :
+                            status === 'error' 
+                                ? 'bg-red-600 text-white shadow-[0_0_20px_rgba(220,38,38,0.3)]' :
+                                'bg-accent hover:bg-accent-hover text-white dark:text-black hover:shadow-[0_0_25px_rgba(var(--accent),0.3)]'
+                        }`}
                     >
                         {status === 'sending' ? (
                             <>

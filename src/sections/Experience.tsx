@@ -2,18 +2,43 @@ import React from 'react';
 import { Database, Globe, Server, Cloud } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { EXPERIENCE, SKILLS_CATEGORIES } from '../config/portfolio';
+import { TerminalWindow } from '../components/TerminalWindow';
+import { SectionHeader } from '../components/SectionHeader';
+
+const parseLog = (logStr: string, index: number) => {
+    const time = `10:42:${String(12 + index * 4).padStart(2, '0')}`;
+    const levelMatch = logStr.match(/^\[(.*?)\]/);
+    const level = levelMatch ? levelMatch[1] : 'INFO';
+    const message = logStr.replace(/\[.*?\]\s*/, '');
+    
+    let colorClass = 'text-gray-600 dark:text-gray-300';
+    let labelColor = 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20';
+    
+    if (level === 'SUCCESS') {
+        colorClass = 'text-emerald-700 dark:text-emerald-400';
+        labelColor = 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20';
+    } else if (level === 'WARN') {
+        colorClass = 'text-amber-700 dark:text-amber-500';
+        labelColor = 'bg-amber-500/10 text-amber-600 dark:text-amber-500 border border-amber-500/20';
+    } else if (level === 'DEBUG') {
+        colorClass = 'text-purple-700 dark:text-purple-400';
+        labelColor = 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20';
+    } else {
+        // INFO
+        colorClass = 'text-blue-700 dark:text-blue-400';
+        labelColor = 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20';
+    }
+
+    return { time, level, message, colorClass, labelColor };
+};
 
 export const Experience: React.FC = () => {
     return (
         <div className="space-y-20 animate-in fade-in slide-in-from-bottom-8 duration-1000 pb-32">
-            <header className="mb-16">
-                <h2 className="text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-gray-900 to-gray-500 dark:from-white dark:to-gray-400 mb-4 inline-block pb-2">
-                    Experience
-                </h2>
-                <p className="text-gray-500 dark:text-gray-400 text-lg max-w-2xl font-light leading-relaxed">
-                    My professional journey and technical expertise.
-                </p>
-            </header>
+            <SectionHeader 
+                title="Experience" 
+                description="My professional journey and technical expertise."
+            />
 
             <div className="relative border-l-2 border-gray-200/50 dark:border-white/10 ml-4 md:ml-6 space-y-16">
                 {EXPERIENCE.map((exp, idx) => (
@@ -25,27 +50,39 @@ export const Experience: React.FC = () => {
                         transition={{ duration: 0.6, delay: idx * 0.15 }}
                         className="relative pl-8 md:pl-12"
                     >
-                        <div className="absolute -left-[9px] top-2 h-4 w-4 rounded-full bg-blue-500 border-4 border-[#fafafa] dark:border-[#050505] shadow-sm" />
+                        <div className="absolute -left-[9px] top-2 h-4 w-4 rounded-full bg-accent border-4 border-[#fafafa] dark:border-[#050505] shadow-sm" />
 
                         <div className="glass dark:glass-dark p-8 rounded-3xl hover:-translate-y-2 transition-all duration-500 hover:shadow-spatial dark:hover:shadow-spatial-dark border-t border-l border-white/40 dark:border-white/10 group">
                             <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-6">
                                 <div>
-                                    <h3 className="text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">{exp.role}</h3>
-                                    <div className="text-blue-600 dark:text-blue-400 font-semibold text-lg">{exp.company}</div>
+                                    <h3 className="text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-1 group-hover:text-accent transition-colors duration-300">{exp.role}</h3>
+                                    <div className="text-accent font-semibold text-lg">{exp.company}</div>
                                 </div>
                                 <span className="mt-4 md:mt-0 px-4 py-1.5 glass dark:glass-dark rounded-full text-xs font-semibold text-gray-600 dark:text-gray-400 shadow-sm whitespace-nowrap">
                                     {exp.period}
                                 </span>
                             </div>
 
-                            <ul className="space-y-4">
-                                {exp.logs.map((log, i) => (
-                                    <li key={i} className="flex gap-4 text-gray-500 dark:text-gray-400 leading-relaxed font-light">
-                                        <span className="mt-2.5 h-1.5 w-1.5 rounded-full bg-gray-400 dark:bg-gray-600 shrink-0" />
-                                        <span>{log.replace(/\[.*?\]\s*/, '')}</span>
-                                    </li>
-                                ))}
-                            </ul>
+                            <TerminalWindow 
+                                title={`${exp.company.toLowerCase().replace(/\s+/g, '_')}_diagnostics.log`}
+                                defaultHeight="min-h-fit"
+                                className="border border-gray-200/50 dark:border-white/5 shadow-inner"
+                            >
+                                <div className="font-mono text-xs md:text-sm space-y-2.5 select-text">
+                                    {exp.logs.map((log, i) => {
+                                        const { time, level, message, colorClass, labelColor } = parseLog(log, i);
+                                        return (
+                                            <div key={i} className="flex flex-wrap items-start gap-x-2 md:gap-x-3 leading-relaxed py-0.5 hover:bg-black/5 dark:hover:bg-white/[0.02] rounded px-1 transition-colors">
+                                                <span className="text-gray-400 dark:text-gray-600 shrink-0 select-none">[{time}]</span>
+                                                <span className={`px-1.5 py-0.5 text-[9px] font-bold rounded shrink-0 select-none ${labelColor}`}>
+                                                    {level}
+                                                </span>
+                                                <span className={`flex-grow font-medium ${colorClass}`}>{message}</span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </TerminalWindow>
                         </div>
                     </motion.div>
                 ))}
