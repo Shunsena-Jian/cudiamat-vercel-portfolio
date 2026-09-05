@@ -18,7 +18,7 @@ export const TerminalShell: React.FC = () => {
     const [inputValue, setInputValue] = useState('');
     const [matrixActive, setMatrixActive] = useState(false);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
-    const terminalEndRef = useRef<HTMLDivElement | null>(null);
+    const scrollContainerRef = useRef<HTMLDivElement | null>(null);
     const inputRef = useRef<HTMLInputElement | null>(null);
 
 
@@ -70,9 +70,13 @@ export const TerminalShell: React.FC = () => {
         };
     }, [matrixActive]);
 
-    // Scroll to bottom whenever history changes
+    // Pin the terminal's own scroll box to the latest output.
+    // Scrolls only the inner container so the page itself never moves.
     useEffect(() => {
-        terminalEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+        const container: HTMLDivElement | null = scrollContainerRef.current;
+        if (container) {
+            container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+        }
     }, [history]);
 
     const focusInput = () => {
@@ -219,7 +223,7 @@ export const TerminalShell: React.FC = () => {
             </div>
 
             {/* Content area */}
-            <div className="p-6 font-mono text-xs md:text-sm bg-gray-50/50 dark:bg-black/40 min-h-[320px] max-h-[360px] overflow-y-auto space-y-2.5 relative select-text flex flex-col justify-start">
+            <div ref={scrollContainerRef} className="p-6 font-mono text-xs md:text-sm bg-gray-50/50 dark:bg-black/40 min-h-[320px] max-h-[360px] overflow-y-auto space-y-2.5 relative select-text flex flex-col justify-start">
                 
                 {/* Matrix Rain canvas layer */}
                 {matrixActive && (
@@ -243,7 +247,6 @@ export const TerminalShell: React.FC = () => {
                             {line.text}
                         </div>
                     ))}
-                    <div ref={terminalEndRef} />
                 </div>
 
                 {/* Prompt command line */}

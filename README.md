@@ -52,7 +52,8 @@ A modern, terminal-themed personal portfolio website built with **React**, **Typ
 ```
 src/
 ├── components/       # Reusable UI components (TerminalWindow, TypewriterText, etc.)
-├── data/            # Static data for Projects, Experience, and Skills
+├── config/          # Portfolio data (Projects, Experience, Skills)
+├── constants/       # Shared animation variants and constants
 ├── sections/        # Main page sections (Home, Projects, Experience, Contact)
 ├── types.ts         # TypeScript definitions
 ├── App.tsx          # Main application entry

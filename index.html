@@ -6,67 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cudiamat Portfolio</title>
     
-    <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'">
-    <meta http-equiv="X-Frame-Options" content="DENY">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <!-- Note: X-Frame-Options and X-Content-Type-Options are set as real HTTP headers in vercel.json (meta tags are ignored by browsers). -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.emailjs.com">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
         rel="stylesheet">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        mono: ['"Fira Code"', 'monospace'],
-                        sans: ['"Inter"', 'sans-serif'],
-                    },
-                    colors: {
-                        terminal: {
-                            black: '#0c0c0c',
-                            green: '#22c55e',
-                            dim: '#15803d',
-                            cursor: '#4ade80',
-                            gray: '#1f2937'
-                        }
-                    },
-                    animation: {
-                        'blink': 'blink 1s step-end infinite',
-                        'scanline': 'scanline 8s linear infinite',
-                        'blob': 'blob 7s infinite',
-                    },
-                    keyframes: {
-                        blink: {
-                            '0%, 100%': { opacity: '1' },
-                            '50%': { opacity: '0' },
-                        },
-                        scanline: {
-                            '0%': { transform: 'translateY(-100%)' },
-                            '100%': { transform: 'translateY(100%)' },
-                        },
-                        blob: {
-                            "0%": {
-                                transform: "translate(0px, 0px) scale(1)",
-                            },
-                            "33%": {
-                                transform: "translate(30px, -50px) scale(1.1)",
-                            },
-                            "66%": {
-                                transform: "translate(-20px, 20px) scale(0.9)",
-                            },
-                            "100%": {
-                                transform: "translate(0px, 0px) scale(1)",
-                            },
-                        },
-                    }
-                },
-            },
-        }
-    </script>
     <style>
         body {
             background-color: #050505;

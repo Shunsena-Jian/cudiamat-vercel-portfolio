@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { NavBar } from './components/NavBar';
 import { Home } from './sections/Home';
-import { Projects } from './sections/Projects';
-import { Experience } from './sections/Experience';
-import { Contact } from './sections/Contact';
-import { KasaloKusinaDetails } from './sections/KasaloKusinaDetails';
 
 import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
+
+const Projects = lazy(() => import('./sections/Projects').then((m) => ({ default: m.Projects })));
+const Experience = lazy(() => import('./sections/Experience').then((m) => ({ default: m.Experience })));
+const Contact = lazy(() => import('./sections/Contact').then((m) => ({ default: m.Contact })));
+const KasaloKusinaDetails = lazy(() => import('./sections/KasaloKusinaDetails').then((m) => ({ default: m.KasaloKusinaDetails })));
 
 export default function App() {
     const { scrollYProgress } = useScroll();
@@ -97,10 +98,12 @@ export default function App() {
                         transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
                         {activeSection === 'home' && <Home onNavigate={setActiveSection} />}
-                        {activeSection === 'projects' && <Projects />}
-                        {activeSection === 'kasalo-kusina' && <KasaloKusinaDetails onBack={() => setActiveSection('projects')} />}
-                        {activeSection === 'experience' && <Experience />}
-                        {activeSection === 'contact' && <Contact />}
+                        <Suspense fallback={<div className="py-24 text-center font-mono text-sm text-gray-500 dark:text-gray-400">loading module…</div>}>
+                            {activeSection === 'projects' && <Projects />}
+                            {activeSection === 'kasalo-kusina' && <KasaloKusinaDetails onBack={() => setActiveSection('projects')} />}
+                            {activeSection === 'experience' && <Experience />}
+                            {activeSection === 'contact' && <Contact />}
+                        </Suspense>
                     </motion.div>
                 </AnimatePresence>
             </main>

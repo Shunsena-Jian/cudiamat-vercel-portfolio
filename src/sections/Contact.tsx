@@ -1,34 +1,58 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Send, Github, Linkedin, Mail, Loader2, CheckCircle, XCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { SOCIAL, CONTACT } from '@/config/portfolio';
 import { SectionHeader } from '../components/SectionHeader';
 
+type SendStatus = 'idle' | 'sending' | 'success' | 'error';
+
 export const Contact: React.FC = () => {
     const form = useRef<HTMLFormElement>(null);
-    const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+    const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const [status, setStatus] = useState<SendStatus>('idle');
 
-    const sendEmail = (e: React.FormEvent) => {
+    useEffect(() => {
+        return () => {
+            if (resetTimer.current) {
+                clearTimeout(resetTimer.current);
+                resetTimer.current = null;
+            }
+        };
+    }, []);
+
+    const scheduleReset = (): void => {
+        if (resetTimer.current) {
+            clearTimeout(resetTimer.current);
+        }
+        resetTimer.current = setTimeout(() => {
+            setStatus('idle');
+            resetTimer.current = null;
+        }, 3000);
+    };
+
+    const sendEmail = (e: React.FormEvent): void => {
         e.preventDefault();
-        if (!form.current) return;
+        if (!form.current || status === 'sending') return;
+
+        const serviceId: string | undefined = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+        const templateId: string | undefined = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+        const publicKey: string | undefined = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+        if (!serviceId || !templateId || !publicKey) {
+            setStatus('error');
+            scheduleReset();
+            return;
+        }
 
         setStatus('sending');
 
-        emailjs.sendForm(
-            import.meta.env.VITE_EMAILJS_SERVICE_ID,
-            import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-            form.current,
-            import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-        )
-            .then((result) => {
-                console.log(result.text);
+        emailjs.sendForm(serviceId, templateId, form.current, publicKey)
+            .then(() => {
                 setStatus('success');
                 form.current?.reset();
-                setTimeout(() => setStatus('idle'), 3000);
-            }, (error) => {
-                console.log(error.text);
+                scheduleReset();
+            }, () => {
                 setStatus('error');
-                setTimeout(() => setStatus('idle'), 3000);
+                scheduleReset();
             });
     };
 
@@ -43,8 +67,9 @@ export const Contact: React.FC = () => {
                 <form ref={form} className="space-y-8" onSubmit={sendEmail}>
                     <div className="grid md:grid-cols-2 gap-8">
                         <div className="space-y-3">
-                            <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Your Name</label>
+                            <label htmlFor="contact-name" className="text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Your Name</label>
                             <input
+                                id="contact-name"
                                 type="text"
                                 name="user_name"
                                 required
@@ -54,8 +79,9 @@ export const Contact: React.FC = () => {
                         </div>
 
                         <div className="space-y-3">
-                            <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Your Email</label>
+                            <label htmlFor="contact-email" className="text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Your Email</label>
                             <input
+                                id="contact-email"
                                 type="email"
                                 name="user_email"
                                 required
@@ -66,8 +92,9 @@ export const Contact: React.FC = () => {
                     </div>
 
                     <div className="space-y-3">
-                        <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Your Message</label>
+                        <label htmlFor="contact-message" className="text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Your Message</label>
                         <textarea
+                            id="contact-message"
                             name="message"
                             required
                             rows={6}

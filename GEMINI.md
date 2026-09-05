@@ -15,7 +15,7 @@ This is a modern, terminal-themed personal portfolio website built with **React 
 - `src/App.tsx`: Main application entry point handling navigation state (`activeSection`) and theme (dark/light) management.
 - `src/components/`: Reusable UI components (e.g., `NavBar`, `TerminalWindow`, `TypewriterText`).
 - `src/sections/`: Main page sections representing different views (`Home`, `Projects`, `Experience`, `Contact`, `KasaloKusinaDetails`).
-- `src/data/`: Static data for Projects, Experience, and Skills.
+- `src/config/portfolio.ts`: Portfolio data for Projects, Experience, and Skills.
 - `src/types.ts`: TypeScript type definitions.
 - `src/index.css`: Global styles and Tailwind directives.
 
@@ -28,8 +28,6 @@ This is a modern, terminal-themed personal portfolio website built with **React 
    VITE_EMAILJS_SERVICE_ID=your_service_id
    VITE_EMAILJS_TEMPLATE_ID=your_template_id
    VITE_EMAILJS_PUBLIC_KEY=your_public_key
-   # Note: vite.config.ts also references GEMINI_API_KEY
-   GEMINI_API_KEY=your_gemini_api_key
    ```
 
 ### Commands

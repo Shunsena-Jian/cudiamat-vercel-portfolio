@@ -7,7 +7,18 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        mono: ['"Fira Code"', 'monospace'],
+        sans: ['"Inter"', 'sans-serif'],
+      },
       colors: {
+        terminal: {
+          black: '#0c0c0c',
+          green: '#22c55e',
+          dim: '#15803d',
+          cursor: '#4ade80',
+          gray: '#1f2937',
+        },
         'glass-border': 'rgba(255, 255, 255, 0.2)',
         'glass-surface': 'rgba(255, 255, 255, 0.1)',
         'glass-highlight': 'rgba(255, 255, 255, 0.5)',
@@ -27,12 +38,17 @@ export default {
       },
       animation: {
         'mesh': 'mesh 20s ease-in-out infinite alternate',
+        'blink': 'blink 1s step-end infinite',
       },
       keyframes: {
         mesh: {
           '0%': { transform: 'scale(1) translate(0, 0)' },
           '50%': { transform: 'scale(1.1) translate(-2%, 2%)' },
           '100%': { transform: 'scale(1) translate(0, 0)' },
+        },
+        blink: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0' },
         }
       },
     },
