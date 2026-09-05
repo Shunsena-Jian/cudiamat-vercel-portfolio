@@ -1,141 +1,104 @@
 import React from 'react';
-import { Database, Globe, Server, Cloud } from 'lucide-react';
+import { Database, Layout, Server, Cloud, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { EXPERIENCE, SKILLS_CATEGORIES } from '../config/portfolio';
-import { TerminalWindow } from '../components/TerminalWindow';
 import { SectionHeader } from '../components/SectionHeader';
 
-const parseLog = (logStr: string, index: number) => {
-    const time = `10:42:${String(12 + index * 4).padStart(2, '0')}`;
-    const levelMatch = logStr.match(/^\[(.*?)\]/);
-    const level = levelMatch ? levelMatch[1] : 'INFO';
-    const message = logStr.replace(/\[.*?\]\s*/, '');
-    
-    let colorClass = 'text-gray-600 dark:text-gray-300';
-    let labelColor = 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20';
-    
-    if (level === 'SUCCESS') {
-        colorClass = 'text-emerald-700 dark:text-emerald-400';
-        labelColor = 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20';
-    } else if (level === 'WARN') {
-        colorClass = 'text-amber-700 dark:text-amber-500';
-        labelColor = 'bg-amber-500/10 text-amber-600 dark:text-amber-500 border border-amber-500/20';
-    } else if (level === 'DEBUG') {
-        colorClass = 'text-purple-700 dark:text-purple-400';
-        labelColor = 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20';
-    } else {
-        // INFO
-        colorClass = 'text-blue-700 dark:text-blue-400';
-        labelColor = 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20';
-    }
-
-    return { time, level, message, colorClass, labelColor };
+const categoryIcons: Record<string, React.ComponentType<{ size?: number | string; className?: string }>> = {
+    backend: Server,
+    frontend: Layout,
+    database: Database,
+    others: Cloud,
 };
 
 export const Experience: React.FC = () => {
     return (
-        <div className="space-y-20 animate-in fade-in slide-in-from-bottom-8 duration-1000 pb-32">
-            <SectionHeader 
-                title="Experience" 
-                description="My professional journey and technical expertise."
+        <div className="space-y-16 sm:space-y-20 pb-8">
+            <SectionHeader
+                eyebrow="Career"
+                title="Experience"
+                description="Where I have worked, what I delivered, and the tools I reach for."
             />
 
-            <div className="relative border-l-2 border-gray-200/50 dark:border-white/10 ml-4 md:ml-6 space-y-16">
+            <ol className="relative ml-2 sm:ml-3 space-y-6 border-l-2 border-zinc-200 dark:border-white/10">
                 {EXPERIENCE.map((exp, idx) => (
-                    <motion.div
+                    <motion.li
                         key={exp.id}
-                        initial={{ opacity: 0, x: -50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: 24 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-50px" }}
-                        transition={{ duration: 0.6, delay: idx * 0.15 }}
-                        className="relative pl-8 md:pl-12"
+                        transition={{ duration: 0.5, delay: idx * 0.08 }}
+                        className="relative pl-7 sm:pl-9"
                     >
-                        <div className="absolute -left-[9px] top-2 h-4 w-4 rounded-full bg-accent border-4 border-[#fafafa] dark:border-[#050505] shadow-sm" />
-
-                        <div className="glass dark:glass-dark p-8 rounded-3xl hover:-translate-y-2 transition-all duration-500 hover:shadow-spatial dark:hover:shadow-spatial-dark border-t border-l border-white/40 dark:border-white/10 group">
-                            <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-6">
+                        <span
+                            aria-hidden="true"
+                            className="absolute -left-[7px] top-7 h-3 w-3 rounded-full bg-accent ring-4 ring-paper dark:ring-ink"
+                        />
+                        <article className="surface rounded-2xl p-7 sm:p-8">
+                            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-5">
                                 <div>
-                                    <h3 className="text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-1 group-hover:text-accent transition-colors duration-300">{exp.role}</h3>
-                                    <div className="text-accent font-semibold text-lg">{exp.company}</div>
+                                    <h3 className="text-xl sm:text-2xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
+                                        {exp.role}
+                                    </h3>
+                                    <p className="text-accent font-semibold mt-1">{exp.company}</p>
                                 </div>
-                                <span className="mt-4 md:mt-0 px-4 py-1.5 glass dark:glass-dark rounded-full text-xs font-semibold text-gray-600 dark:text-gray-400 shadow-sm whitespace-nowrap">
+                                <span className="w-fit shrink-0 px-3.5 py-1.5 rounded-full text-xs font-mono font-medium text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-white/5 border border-zinc-200/70 dark:border-white/10 whitespace-nowrap">
                                     {exp.period}
                                 </span>
                             </div>
 
-                            <TerminalWindow 
-                                title={`${exp.company.toLowerCase().replace(/\s+/g, '_')}_diagnostics.log`}
-                                defaultHeight="min-h-fit"
-                                className="border border-gray-200/50 dark:border-white/5 shadow-inner"
-                            >
-                                <div className="font-mono text-xs md:text-sm space-y-2.5 select-text">
-                                    {exp.logs.map((log, i) => {
-                                        const { time, level, message, colorClass, labelColor } = parseLog(log, i);
-                                        return (
-                                            <div key={i} className="flex flex-wrap items-start gap-x-2 md:gap-x-3 leading-relaxed py-0.5 hover:bg-black/5 dark:hover:bg-white/[0.02] rounded px-1 transition-colors">
-                                                <span className="text-gray-400 dark:text-gray-600 shrink-0 select-none">[{time}]</span>
-                                                <span className={`px-1.5 py-0.5 text-[9px] font-bold rounded shrink-0 select-none ${labelColor}`}>
-                                                    {level}
-                                                </span>
-                                                <span className={`flex-grow font-medium ${colorClass}`}>{message}</span>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            </TerminalWindow>
-                        </div>
-                    </motion.div>
-                ))}
-            </div>
-
-            <div className="pt-16">
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-10 flex items-center gap-3 tracking-tight">
-                    <Cloud className="text-blue-500" />
-                    Technical Arsenal
-                </h3>
-
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {SKILLS_CATEGORIES.map((category) => (
-                        <div key={category.id} className="glass dark:glass-dark p-8 rounded-3xl hover:-translate-y-2 transition-all duration-500 hover:shadow-spatial dark:hover:shadow-spatial-dark h-full border-t border-l border-white/40 dark:border-white/10 group">
-                            <div className="flex items-center gap-4 mb-8 pb-6 border-b border-gray-200/50 dark:border-white/10">
-                                <div className={`p-3 rounded-2xl bg-gradient-to-br shadow-inner ${category.id === 'backend' ? 'from-emerald-500/20 to-emerald-600/5 text-emerald-600 dark:from-emerald-400/20 dark:to-emerald-500/5 dark:text-emerald-400' :
-                                    category.id === 'frontend' ? 'from-blue-500/20 to-blue-600/5 text-blue-600 dark:from-blue-400/20 dark:to-blue-500/5 dark:text-blue-400' :
-                                        category.id === 'database' ? 'from-amber-500/20 to-amber-600/5 text-amber-600 dark:from-amber-400/20 dark:to-amber-500/5 dark:text-amber-400' : 'from-purple-500/20 to-purple-600/5 text-purple-600 dark:from-purple-400/20 dark:to-purple-500/5 dark:text-purple-400'
-                                    }`}>
-                                    {category.id === 'backend' ? <Server size={22} className="group-hover:scale-110 transition-transform" /> :
-                                        category.id === 'frontend' ? <Globe size={22} className="group-hover:scale-110 transition-transform" /> :
-                                            category.id === 'database' ? <Database size={22} className="group-hover:scale-110 transition-transform" /> :
-                                                <Cloud size={22} className="group-hover:scale-110 transition-transform" />}
-                                </div>
-                                <span className="font-extrabold text-gray-900 dark:text-white text-lg capitalize tracking-tight">{category.title}</span>
-                            </div>
-
-                            <div className="space-y-6">
-                                {category.skills.map((skill, i) => (
-                                    <div key={skill.name}>
-                                        <div className="flex justify-between text-sm mb-2">
-                                            <span className="font-semibold text-gray-700 dark:text-gray-300">{skill.name}</span>
-                                            <span className="text-gray-400 dark:text-gray-500 font-mono text-xs">{skill.level}%</span>
-                                        </div>
-                                        <div className="h-1.5 w-full bg-gray-200/50 dark:bg-white/5 rounded-full overflow-hidden backdrop-blur-sm">
-                                            <motion.div
-                                                initial={{ width: 0 }}
-                                                whileInView={{ width: `${skill.level}%` }}
-                                                viewport={{ once: true }}
-                                                transition={{ duration: 1, delay: i * 0.1 }}
-                                                className={`h-full rounded-full ${category.id === 'backend' ? 'bg-emerald-500' :
-                                                    category.id === 'frontend' ? 'bg-blue-500' :
-                                                        category.id === 'database' ? 'bg-amber-500' : 'bg-purple-500'
-                                                    }`}
-                                            />
-                                        </div>
-                                    </div>
+                            <ul className="space-y-2.5">
+                                {exp.highlights.map((highlight) => (
+                                    <li key={highlight} className="flex items-start gap-2.5 text-[15px] text-zinc-600 dark:text-zinc-300 font-light leading-relaxed">
+                                        <Check size={16} className="text-accent shrink-0 mt-1" aria-hidden="true" />
+                                        <span>{highlight}</span>
+                                    </li>
                                 ))}
+                            </ul>
+                        </article>
+                    </motion.li>
+                ))}
+            </ol>
+
+            <section className="pt-4">
+                <h3 className="text-2xl font-bold text-zinc-900 dark:text-white mb-3 tracking-tight">
+                    Technical toolkit
+                </h3>
+                <p className="text-zinc-500 dark:text-zinc-400 font-light mb-8 max-w-xl">
+                    Grouped by where each tool earns its keep. No proficiency percentages — ask me in an interview.
+                </p>
+
+                <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
+                    {SKILLS_CATEGORIES.map((category) => {
+                        const Icon = categoryIcons[category.iconName] ?? Cloud;
+                        return (
+                            <div key={category.id} className="surface rounded-2xl p-7">
+                                <div className="flex items-center gap-3.5 mb-2">
+                                    <div className="h-10 w-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center shrink-0">
+                                        <Icon size={20} aria-hidden="true" />
+                                    </div>
+                                    <h4 className="font-bold text-zinc-900 dark:text-white text-lg tracking-tight">
+                                        {category.title}
+                                    </h4>
+                                </div>
+                                <p className="text-sm text-zinc-500 dark:text-zinc-400 font-light mb-5">
+                                    {category.summary}
+                                </p>
+                                <ul className="flex flex-wrap gap-1.5" aria-label={`${category.title} skills`}>
+                                    {category.skills.map((skill) => (
+                                        <li
+                                            key={skill}
+                                            className="px-2.5 py-1 rounded-md text-xs font-medium bg-zinc-100 dark:bg-white/5 text-zinc-600 dark:text-zinc-300 border border-zinc-200/70 dark:border-white/10"
+                                        >
+                                            {skill}
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
-            </div>
+            </section>
         </div>
     );
 };

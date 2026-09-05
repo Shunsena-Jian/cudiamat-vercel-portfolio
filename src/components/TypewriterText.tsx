@@ -57,7 +57,7 @@ export const TypewriterText: React.FC<TypewriterTextProps> = ({
     return (
         <span className={className}>
             {displayedText}
-            {cursor && <span className="animate-blink ml-1 bg-terminal-cursor w-2 h-4 inline-block align-middle"></span>}
+            {cursor && <span className="animate-blink ml-1 bg-accent w-2 h-5 inline-block align-middle" aria-hidden="true"></span>}
         </span>
     );
 };

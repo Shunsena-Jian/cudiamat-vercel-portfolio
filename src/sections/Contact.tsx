@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Send, Github, Linkedin, Mail, Loader2, CheckCircle, XCircle } from 'lucide-react';
+import { Send, Loader2, CheckCircle, XCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
-import { SOCIAL, CONTACT } from '@/config/portfolio';
+import { CONTACT } from '@/config/portfolio';
 import { SectionHeader } from '../components/SectionHeader';
 
 type SendStatus = 'idle' | 'sending' | 'success' | 'error';
+
+const inputClasses = 'w-full bg-zinc-50 dark:bg-black/20 border border-zinc-200 dark:border-white/10 px-4 py-3.5 rounded-xl text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:border-accent focus:ring-2 focus:ring-[rgb(var(--accent-glow))] focus:outline-none transition-all text-[15px]';
 
 export const Contact: React.FC = () => {
     const form = useRef<HTMLFormElement>(null);
@@ -57,48 +59,51 @@ export const Contact: React.FC = () => {
     };
 
     return (
-        <div className="max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-1000 pb-32">
-            <SectionHeader 
-                title="Get in Touch" 
+        <div className="max-w-2xl mx-auto pb-8">
+            <SectionHeader
+                eyebrow="Contact"
+                title="Get in Touch"
                 description={CONTACT.defaultStatusMessage}
             />
 
-            <div className="glass dark:glass-dark rounded-3xl p-8 md:p-12 border-t border-l border-white/40 dark:border-white/10 relative shadow-spatial dark:shadow-spatial-dark">
-                <form ref={form} className="space-y-8" onSubmit={sendEmail}>
-                    <div className="grid md:grid-cols-2 gap-8">
-                        <div className="space-y-3">
-                            <label htmlFor="contact-name" className="text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Your Name</label>
+            <div className="surface rounded-2xl p-7 sm:p-10">
+                <form ref={form} className="space-y-6" onSubmit={sendEmail}>
+                    <div className="grid sm:grid-cols-2 gap-6">
+                        <div className="space-y-2">
+                            <label htmlFor="contact-name" className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">Your Name</label>
                             <input
                                 id="contact-name"
                                 type="text"
                                 name="user_name"
                                 required
-                                className="w-full bg-white/40 dark:bg-black/20 backdrop-blur-md border border-gray-200/50 dark:border-white/10 p-4 rounded-2xl text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:outline-none transition-all shadow-inner"
+                                autoComplete="name"
+                                className={inputClasses}
                                 placeholder={CONTACT.formPlaceholders.name}
                             />
                         </div>
 
-                        <div className="space-y-3">
-                            <label htmlFor="contact-email" className="text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Your Email</label>
+                        <div className="space-y-2">
+                            <label htmlFor="contact-email" className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">Your Email</label>
                             <input
                                 id="contact-email"
                                 type="email"
                                 name="user_email"
                                 required
-                                className="w-full bg-white/40 dark:bg-black/20 backdrop-blur-md border border-gray-200/50 dark:border-white/10 p-4 rounded-2xl text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:outline-none transition-all shadow-inner"
+                                autoComplete="email"
+                                className={inputClasses}
                                 placeholder={CONTACT.formPlaceholders.email}
                             />
                         </div>
                     </div>
 
-                    <div className="space-y-3">
-                        <label htmlFor="contact-message" className="text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Your Message</label>
+                    <div className="space-y-2">
+                        <label htmlFor="contact-message" className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">Your Message</label>
                         <textarea
                             id="contact-message"
                             name="message"
                             required
                             rows={6}
-                            className="w-full bg-white/40 dark:bg-black/20 backdrop-blur-md border border-gray-200/50 dark:border-white/10 p-4 rounded-2xl text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:outline-none transition-all resize-none shadow-inner"
+                            className={`${inputClasses} resize-none`}
                             placeholder={CONTACT.formPlaceholders.message}
                         />
                     </div>
@@ -106,52 +111,42 @@ export const Contact: React.FC = () => {
                     <button
                         type="submit"
                         disabled={status === 'sending' || status === 'success'}
-                        className={`w-full font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] border border-transparent dark:border-white/20 ${
-                            status === 'success' 
-                                ? 'bg-emerald-600 text-white cursor-default shadow-[0_0_20px_rgba(16,185,129,0.3)]' :
-                            status === 'error' 
-                                ? 'bg-red-600 text-white shadow-[0_0_20px_rgba(220,38,38,0.3)]' :
-                                'bg-accent hover:bg-accent-hover text-white dark:text-black hover:shadow-[0_0_25px_rgba(var(--accent),0.3)]'
+                        className={`w-full font-bold py-3.5 px-6 rounded-xl flex items-center justify-center gap-2.5 transition-colors duration-300 text-[15px] ${
+                            status === 'success'
+                                ? 'bg-emerald-600 text-white cursor-default'
+                            : status === 'error'
+                                ? 'bg-red-600 text-white'
+                                : 'bg-accent hover:bg-accent-hover text-white'
                         }`}
                     >
                         {status === 'sending' ? (
                             <>
-                                <Loader2 size={20} className="animate-spin" />
+                                <Loader2 size={19} className="animate-spin" aria-hidden="true" />
                                 Sending...
                             </>
                         ) : status === 'success' ? (
                             <>
-                                <CheckCircle size={20} />
+                                <CheckCircle size={19} aria-hidden="true" />
                                 Message Sent!
                             </>
                         ) : status === 'error' ? (
                             <>
-                                <XCircle size={20} />
+                                <XCircle size={19} aria-hidden="true" />
                                 Failed to Send
                             </>
                         ) : (
                             <>
-                                <Send size={20} />
+                                <Send size={19} aria-hidden="true" />
                                 Send Message
                             </>
                         )}
                     </button>
+                    <p className="text-xs text-zinc-400 dark:text-zinc-500 font-light text-center" role="status">
+                        {status === 'error'
+                            ? 'Something went wrong sending your message. Please try again or reach me via the links below.'
+                            : 'I usually reply within a day or two.'}
+                    </p>
                 </form>
-            </div>
-
-            <div className="mt-16 flex justify-center gap-6">
-                <a href={SOCIAL.github} target="_blank" rel="noopener noreferrer" className="p-4 rounded-full glass dark:glass-dark text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white hover:-translate-y-1 hover:shadow-spatial dark:hover:shadow-spatial-dark transition-all duration-300">
-                    <Github size={24} />
-                    <span className="sr-only">GitHub</span>
-                </a>
-                <a href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer" className="p-4 rounded-full glass dark:glass-dark text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:-translate-y-1 hover:shadow-spatial dark:hover:shadow-spatial-dark transition-all duration-300">
-                    <Linkedin size={24} />
-                    <span className="sr-only">LinkedIn</span>
-                </a>
-                <a href={SOCIAL.emailLink} target="_blank" rel="noopener noreferrer" className="p-4 rounded-full glass dark:glass-dark text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:-translate-y-1 hover:shadow-spatial dark:hover:shadow-spatial-dark transition-all duration-300">
-                    <Mail size={24} />
-                    <span className="sr-only">Email</span>
-                </a>
             </div>
         </div>
     );

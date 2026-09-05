@@ -10,7 +10,7 @@
  * 3. Update metadata in index.html if needed
  */
 
-import { Experience, Project } from '@/types';
+import { Experience, Project, SkillCategory } from '@/types';
 
 // ============================================================
 // PERSONAL INFORMATION
@@ -34,15 +34,6 @@ export const SOCIAL = {
 } as const;
 
 // ============================================================
-// SITE METADATA
-// ============================================================
-export const METADATA = {
-    title: "Cudiamat Portfolio",
-    description: "A high-tech, terminal-themed portfolio designed for backend engineers.",
-    keywords: ["backend", "portfolio", "web developer", "API", "engineering"],
-} as const;
-
-// ============================================================
 // CONTACT SETTINGS
 // ============================================================
 export const CONTACT = {
@@ -55,7 +46,7 @@ export const CONTACT = {
 } as const;
 
 // ============================================================
-// FEATURES/SKILLS HIGHLIGHTS (Home page feature cards)
+// PRINCIPLES (Home page feature cards)
 // ============================================================
 export const FEATURES = [
     {
@@ -63,21 +54,18 @@ export const FEATURES = [
         title: "Performance First",
         description: "Optimized for speed and efficiency. Every millisecond counts in user experience.",
         icon: "zap",
-        color: "blue",
     },
     {
         id: "pixel-perfect",
         title: "Pixel Perfect",
         description: "Attention to detail in every component, ensuring a consistent and polished look.",
         icon: "target",
-        color: "purple",
     },
     {
         id: "global-scale",
         title: "Global Scale",
         description: "Building systems designed to handle global traffic and diverse user bases.",
         icon: "globe",
-        color: "emerald",
     },
 ] as const;
 
@@ -104,22 +92,47 @@ export const PROJECTS: Project[] = [
         latency: '15ms'
     },
     {
-        id: 'p3',
-        name: 'Kasalo Kusina (Frontend)',
-        description: 'High-performance frontend interface for a culinary sharing ecosystem. Optimized for user engagement with modular component architecture.',
-        techStack: ['ReactJS', 'Tailwind', 'Vite'],
+        id: 'kasalo-kusina',
+        name: 'Kasalo Kusina',
+        description: 'A culinary sharing ecosystem connecting home cooks with food enthusiasts, built on a modern full-stack architecture with a modular frontend and a scalable RESTful API.',
+        techStack: ['ReactJS', 'Tailwind', 'Vite', 'NodeJS', 'Express', 'MySQL'],
         status: 'In Development',
-        endpoint: 'localhost:3001',
-        latency: '8ms'
-    },
-    {
-        id: 'p4',
-        name: 'Kasalo Kusina (Backend)',
-        description: 'Scalable RESTful API service supporting the culinary platform. Implements complex query logic, secure authentication gateways, and optimized data retrieval.',
-        techStack: ['NodeJS', 'Express', 'MySQL', 'JWT'],
-        status: 'In Development',
-        endpoint: 'localhost:3000',
-        latency: '5ms'
+        endpoint: 'https://kasalo-kusina.vercel.app',
+        latency: '8ms',
+        details: {
+            tagline: 'A comprehensive culinary sharing ecosystem connecting home cooks with food enthusiasts using a modern, scalable full-stack architecture.',
+            liveUrl: 'https://kasalo-kusina.vercel.app/',
+            stacks: [
+                {
+                    title: 'Frontend Experience',
+                    description: 'Optimized for maximum user engagement with a modular component architecture. The interface prioritizes speed, accessibility, and a seamless visual flow.',
+                    tech: ['Typescript', 'ReactJS', 'Tailwind CSS', 'Vite', 'Framer Motion']
+                },
+                {
+                    title: 'Backend Infrastructure',
+                    description: 'A scalable RESTful API service implementing complex query logic, secure authentication gateways, and optimized data retrieval strategies.',
+                    tech: ['Typescript', 'Node.js', 'Express', 'MySQL', 'MongoDB', 'Redis', 'JWT', 'Socket.io']
+                }
+            ],
+            featureGroups: [
+                {
+                    title: 'Current Features',
+                    items: [
+                        { title: 'AI Powered Engine', description: 'Powered by Gemini 3 Flash, Gemini 2.5 Flash, and Gemini 2.5 Flash Lite for intelligent recommendations.' },
+                        { title: 'Slideshow Cooking Presentation', description: 'Immersive slideshow cooking presentation for better user experience.' }
+                    ]
+                },
+                {
+                    title: 'On the Roadmap',
+                    items: [
+                        { title: 'Dynamic Recipe Searching', description: 'Advanced semantic search capabilities to find recipes based on ingredients, mood, or dietary restrictions.', planned: true },
+                        { title: 'Personalized AI Recipes', description: 'Authentic Filipino dishes based on user location and ethnicity.', planned: true },
+                        { title: 'Real Time Interactions', description: 'Chat, Notifications, Comments, and etc.', planned: true },
+                        { title: 'Subscriptions', description: 'Higher AI Usage Limits.', planned: true }
+                    ]
+                }
+            ]
+        }
     },
     {
         id: 'p5',
@@ -129,7 +142,8 @@ export const PROJECTS: Project[] = [
         techStack: ['NextJS', 'Supabase', 'Serverless', 'Google Drive API'],
         status: 'In Development',
         endpoint: 'https://www.esharemo.com',
-        latency: 'n/a'
+        latency: 'n/a',
+        featured: true
     }
 ];
 
@@ -142,11 +156,11 @@ export const EXPERIENCE: Experience[] = [
         role: 'Junior Process Associate',
         company: 'ThoughtFocus',
         period: 'July 2026 - Present',
-        logs: [
-            '[INFO] Triaged support tickets and routed issues to the right teams',
-            '[SUCCESS] Responded to clients through email with clear, timely updates',
-            '[DEBUG] Handled client calls and documented follow-up actions',
-            '[WARN] Supported day-to-day service operations across multiple channels'
+        highlights: [
+            'Triaged support tickets and routed issues to the right teams',
+            'Responded to clients through email with clear, timely updates',
+            'Handled client calls and documented follow-up actions',
+            'Supported day-to-day service operations across multiple channels'
         ]
     },
     {
@@ -154,11 +168,11 @@ export const EXPERIENCE: Experience[] = [
         role: 'Junior Backend Web Developer',
         company: 'Qualitytrade Asia',
         period: 'July 2024 - March 2026',
-        logs: [
-            '[INFO] Engineered robust backends with Laravel, DynamoDB, and OpenSearch',
-            '[SUCCESS] Designed RESTful APIs for seamless system integration',
-            '[DEBUG] Optimized legacy code and enhanced system performance',
-            '[WARN] Maintained Agile SDLC utilizing Jira, Slack, and Confluence'
+        highlights: [
+            'Engineered robust backends with Laravel, DynamoDB, and OpenSearch',
+            'Designed RESTful APIs for seamless system integration',
+            'Optimized legacy code and enhanced system performance',
+            'Maintained Agile SDLC utilizing Jira, Slack, and Confluence'
         ]
     },
     {
@@ -166,10 +180,10 @@ export const EXPERIENCE: Experience[] = [
         role: '(Intern) Computer Programmer',
         company: 'Philippine Military Academy',
         period: 'January 2024 - May 2024',
-        logs: [
-            '[INFO] Architected scalable system components using PHP Laravel framework',
-            '[SUCCESS] Developed web portal for academy operations management',
-            '[WARN] Collaborated with cross-functional teams to ensure timely delivery'
+        highlights: [
+            'Architected scalable system components using the PHP Laravel framework',
+            'Developed web portal for academy operations management',
+            'Collaborated with cross-functional teams to ensure timely delivery'
         ]
     }
 ];
@@ -177,79 +191,35 @@ export const EXPERIENCE: Experience[] = [
 // ============================================================
 // SKILLS (using string icon names - mapping done in Experience.tsx)
 // ============================================================
-export const SKILLS_CATEGORIES = [
+export const SKILLS_CATEGORIES: SkillCategory[] = [
     {
         id: 'backend',
         title: 'Backend',
         iconName: 'server',
-        skills: [
-            { name: 'PHP Laravel', level: '70' },
-            { name: 'NodeJS', level: '30' },
-            { name: 'Javascript', level: '40' },
-            { name: 'Java', level: '20' },
-            { name: 'Python', level: '15' }
-        ]
+        summary: 'APIs, services, and integrations I ship with.',
+        skills: ['PHP Laravel', 'Node.js', 'RESTful APIs', 'JavaScript', 'Python', 'Java']
     },
     {
         id: 'frontend',
         title: 'Frontend',
         iconName: 'layout',
-        skills: [
-            { name: 'Blade', level: '30' },
-            { name: 'ReactJS', level: '20' }
-        ]
+        summary: 'Interfaces I build to sit on top of those APIs.',
+        skills: ['React', 'Blade', 'Tailwind CSS', 'TypeScript']
     },
     {
         id: 'database',
-        title: 'Database',
+        title: 'Data',
         iconName: 'database',
-        skills: [
-            { name: 'MySQL', level: '75' },
-            { name: 'MongoDB', level: '75' },
-            { name: 'DynamoDB', level: '35' }
-        ]
+        summary: 'Stores I model, query, and keep fast.',
+        skills: ['MySQL', 'MongoDB', 'DynamoDB', 'OpenSearch']
     },
     {
         id: 'others',
-        title: 'Others',
+        title: 'Delivery',
         iconName: 'cloud',
-        skills: [
-            { name: 'Github', level: '90' },
-            { name: 'RESTful', level: '75' },
-            { name: 'Postman', level: '75' },
-            { name: 'Stripe', level: '50' },
-            { name: 'Agile SDLC', level: '100' }
-        ]
+        summary: 'How the work gets tested, paid for, and shipped.',
+        skills: ['GitHub', 'Postman', 'Stripe', 'Agile SDLC']
     }
 ];
 
-// ============================================================
-// ANIMATION SETTINGS
-// ============================================================
-export const ANIMATION = {
-    typewriterSpeed: 50,
-    staggerChildren: 0.1,
-    itemTransitionDuration: 0.6,
-    pageTransitionDuration: 0.3,
-} as const;
 
-// ============================================================
-// THEME COLORS (Terminal Theme)
-// ============================================================
-export const THEME = {
-    terminal: {
-        black: '#0c0c0c',
-        green: '#22c55e',
-        dim: '#15803d',
-        cursor: '#4ade80',
-        gray: '#1f2937'
-    },
-    light: {
-        background: '#fafafa',
-        text: '#111827'
-    },
-    dark: {
-        background: '#050505',
-        text: '#e5e7eb'
-    }
-} as const;
